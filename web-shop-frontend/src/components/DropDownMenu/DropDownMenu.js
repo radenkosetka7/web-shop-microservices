@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './DropDownMenu.css';
 import {LogoutOutlined, UserOutlined, QuestionOutlined} from '@ant-design/icons';
-import {Dropdown, Space} from 'antd';
+import {Dropdown} from 'antd';
 import {PlusSquareOutlined} from "@ant-design/icons";
 import {logout} from "../../redux-store/userSlice";
 import {useDispatch, useSelector} from "react-redux";
@@ -36,7 +36,7 @@ const DropDownMenu = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {user} = useSelector((state) => state.users);
+    const {loggedUser} = useSelector((state) => state.users);
 
     const [supportModal, setSupportModal] = useState(false);
     const [addProductModal, setAddProductModal] = useState(false);
@@ -81,7 +81,7 @@ const DropDownMenu = () => {
                 <a onClick={(e) => e.preventDefault()}>
                     <div className='logo-map'>
                         <div className='round-image-container'>
-                            <img className='confLogo round-image' src={ user.avatar !== null ? require("../../assets/users/" + user.avatar):require("../../assets/user_318-159711.avif")}  alt="Logo"/>
+                            <img className='confLogo round-image' src={ loggedUser.avatar !== null ? require("../../assets/users/" + loggedUser.avatar):require("../../assets/user_318-159711.avif")}  alt="Logo"/>
                         </div>
                     </div>
                 </a>

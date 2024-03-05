@@ -67,7 +67,7 @@ const messageSlice = createSlice({
         [getMessages.fulfilled]: (state,action) => {
             state.loading=false;
             state.error=null;
-            state.messages = action.payload;
+            state.messages = action.payload.data;
         },
         [getMessages.pending]: (state,action) => {
             state.loading=true;
@@ -88,7 +88,7 @@ const messageSlice = createSlice({
         [getMessage.fulfilled]: (state,action) => {
             state.loading=false;
             state.error=null;
-            state.message = action.payload;
+            state.message = action.payload.data;
         },
         [getMessage.pending]: (state,action) => {
             state.loading=true;

@@ -1,7 +1,7 @@
 import {Button, Form, Input, Modal} from "antd";
 import React, {useState} from "react";
-import {errorCPass, errorLength, invalidEmail, isRequired} from "../../constant/constants";
-import {changePassword, updateUser} from "../../redux-store/userSlice";
+import {invalidEmail, isRequired} from "../../constant/constants";
+import {updateUser} from "../../redux-store/userSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {uploadImage} from "../../services/auth.service";
 

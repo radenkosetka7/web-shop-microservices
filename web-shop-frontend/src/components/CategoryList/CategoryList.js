@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Input, Tree } from 'antd';
+import { Tree } from 'antd';
 
-const { Search } = Input;
 
 const CategoryList = ({ categories, onSelect,setSelectedCategoryTemp  }) => {
     const [expandedKeys, setExpandedKeys] = useState([]);

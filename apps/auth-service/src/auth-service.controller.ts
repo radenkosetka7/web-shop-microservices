@@ -78,13 +78,6 @@ export class AuthServiceController {
       const imageName = uuidv4() + '_' + file.originalname;
       const imagePath = path.join(dir, imageName);
       const bufferData = Buffer.from(file.buffer);
-      try {
-        if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir);
-        }
-      } catch (err) {
-        console.error(err);
-      }
       fs.writeFileSync(imagePath, bufferData);
       return imageName;
     } catch (error) {

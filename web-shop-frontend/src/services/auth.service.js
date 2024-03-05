@@ -6,8 +6,8 @@ export const login = (username, password) => {
     return instance
         .post( gateway + 'login', {username, password})
         .then((results) => {
-            const {token} = results.data;
-            sessionStorage.setItem('access', token);
+            const {access_token} = results.data.data;
+            sessionStorage.setItem('access', access_token);
             return results.data;
         })
         .catch((err) => Promise.reject(err.response.status));

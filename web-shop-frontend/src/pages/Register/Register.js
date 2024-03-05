@@ -8,7 +8,7 @@ import {Button, Form, Input} from 'antd';
 import {useEffect} from "react";
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-
+import { v4 as uuidv4 } from 'uuid';
 
 const Register = () => {
 
@@ -27,11 +27,9 @@ const Register = () => {
 
     const [statusCode, setStatusCode] = useState(null);
 
-    const [selectedFile, setSelectedFile] = useState();
-    const [tempVariable, setTempVariable] = useState(null);
+    const [selectedFile, setSelectedFile] = useState('');
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
-        setTempVariable(1);
     };
     const onSubmit = async (registerData) => {
         setIsDisabled(true);
@@ -40,20 +38,25 @@ const Register = () => {
         try {
             let responseImage = null;
 
-            if (tempVariable !== null) {
-                responseImage = await uploadImage(formData);
+            if (selectedFile) {
+                const upload = await uploadImage(formData);
+                responseImage = upload.data.data;
             }
             const registerReq = {
-                name: registerData.name,
-                surname: registerData.surname,
+                firstname: registerData.name,
+                lastname: registerData.surname,
                 city: registerData.city,
                 username: registerData.username,
                 password: registerData.password,
-                mail: registerData.mail,
-                avatar: tempVariable !== null ? responseImage.data : null
+                email: registerData.mail,
+                avatar: responseImage ? responseImage : null
             }
             const response = await registration(registerReq);
-            if (response.status === 200 || response.status === 201) {
+            if (response.status === 201) {
+                if(responseImage)
+                {
+                    await uploadImage(formData);
+                }
                 setStatusCode("Successfully registered.");
                 setTimeout(() => {
                     navigate("/activateAccount", {state: {username: registerReq.username}});
@@ -67,10 +70,6 @@ const Register = () => {
         }
 
     }
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
     return (
         <div>
             <div style={{backgroundColor: '#f3f1f1', height: contentHeight}}>
@@ -90,7 +89,6 @@ const Register = () => {
                             remember: true,
                         }}
                         onFinish={onSubmit}
-                        onFinishFailed={onFinishFailed}
                         autoComplete="off"
                     >
                         <p className='form-title1'>{signUpTitle}</p>

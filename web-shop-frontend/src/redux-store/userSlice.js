@@ -99,7 +99,7 @@ const userSlice = createSlice({
             state.loading=false;
             state.error=null;
             state.authenticated=true;
-            state.user=action.payload;
+            state.user=action.payload.data;
         },
         [getUser.pending]: (state,action) => {
             state.loading = true;
@@ -111,7 +111,7 @@ const userSlice = createSlice({
             state.loading=false;
             state.error=null;
             state.authenticated=true;
-            state.loggedUser=action.payload;
+            state.loggedUser=action.payload.data;
         },
         [getLoggedUser.pending]: (state,action) => {
             state.loading = true;
@@ -123,7 +123,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.authenticated = true;
             state.error=null;
-            state.user = action.payload;
+            state.user = action.payload.data;
         },
         [updateUser.pending]: (state, action) => {
             state.loading = true;
@@ -135,7 +135,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.authenticated = true;
             state.error=null;
-            state.user = action.payload;
+            state.user = action.payload.data;
         },
         [changePassword.pending]: (state, action) => {
             state.loading = true;
@@ -146,7 +146,7 @@ const userSlice = createSlice({
         [getAllUsers.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.users = action.payload;
+            state.users = action.payload.data;
         },
         [getAllUsers.pending]: (state, action) => {
             state.loading = true;

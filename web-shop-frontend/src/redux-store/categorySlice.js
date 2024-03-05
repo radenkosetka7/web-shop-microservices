@@ -78,7 +78,7 @@ const categorySlice = createSlice({
         [getCategories.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.categories = action.payload;
+            state.categories = action.payload.data;
         },
         [getCategories.pending]: (state,action) => {
             state.loading=true;
@@ -89,7 +89,7 @@ const categorySlice = createSlice({
         [getCategory.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.selectedCategory = action.payload;
+            state.selectedCategory = action.payload.data;
         },
         [getCategory.pending]: (state,action) => {
             state.loading=true;
@@ -100,7 +100,7 @@ const categorySlice = createSlice({
         [crateCategory.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.categories = action.payload;
+            state.categories = action.payload.data;
         },
         [crateCategory.pending]: (state,action) => {
             state.loading=true;
@@ -111,7 +111,7 @@ const categorySlice = createSlice({
         [getCategoryAttributes.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.attributes = action.payload;
+            state.attributes = action.payload.data;
         },
         [getCategoryAttributes.pending]: (state,action) => {
             state.loading=true;
@@ -122,7 +122,7 @@ const categorySlice = createSlice({
         [updateCategory.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.selectedCategory = action.payload;
+            state.selectedCategory = action.payload.data;
         },
         [updateCategory.pending]: (state,action) => {
             state.loading=true;

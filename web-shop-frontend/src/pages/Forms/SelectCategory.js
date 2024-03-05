@@ -1,6 +1,5 @@
 import {Button, Form, Input, InputNumber, Select} from "antd";
 import React, {useEffect, useState} from "react";
-import TextArea from "antd/es/input/TextArea";
 import {useDispatch, useSelector} from "react-redux";
 import {getCategories} from "../../redux-store/categorySlice";
 

@@ -96,7 +96,7 @@ const productSlice = createSlice({
         [getAllProducts.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.products = action.payload;
+            state.products = action.payload.data;
         },
         [getAllProducts.pending]: (state, action) => {
             state.loading = true;
@@ -107,7 +107,7 @@ const productSlice = createSlice({
         [getProduct.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.selectedProduct = action.payload;
+            state.selectedProduct = action.payload.data;
         },
         [getProduct.pending]: (state, action) => {
             state.loading = true;
@@ -128,7 +128,7 @@ const productSlice = createSlice({
         [searchProduct.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.products = action.payload;
+            state.products = action.payload.data;
         },
         [searchProduct.pending]: (state, action) => {
             state.loading = true;
@@ -159,7 +159,7 @@ const productSlice = createSlice({
         [getAllProductsForSeller.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.products = action.payload;
+            state.products = action.payload.data;
         },
         [getAllProductsForSeller.pending]: (state, action) => {
             state.loading = true;
@@ -170,7 +170,7 @@ const productSlice = createSlice({
         [getAllProductsForBuyer.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.products = action.payload;
+            state.products = action.payload.data;
         },
         [getAllProductsForBuyer.pending]: (state, action) => {
             state.loading = true;

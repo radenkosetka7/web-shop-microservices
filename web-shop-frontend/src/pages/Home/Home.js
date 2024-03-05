@@ -5,8 +5,7 @@ import {ClearOutlined, SearchOutlined} from '@ant-design/icons';
 import SearchComponent from "../../components/Search/Search";
 import CardComponent from "../../components/Card/CardComponent";
 import CategoryList from "../../components/CategoryList/CategoryList";
-import jwtDecode from "jwt-decode";
-import {getUser} from "../../redux-store/userSlice";
+import {getLoggedUser} from "../../redux-store/userSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllProducts, searchProduct,removeProduct} from "../../redux-store/productSlice";
 import {getCategories, getCategory, removeCategory} from "../../redux-store/categorySlice";
@@ -71,10 +70,7 @@ const Home = () => {
     useEffect(() => {
         const token = sessionStorage.getItem('access');
         if (token !== null) {
-            const decodedToken = jwtDecode(token);
-            const id = parseInt(decodedToken.jti);
-            dispatch(getUser({id: id}));
-
+            dispatch(getLoggedUser({}));
         }
         dispatch(getCategories({}));
     }, []);
