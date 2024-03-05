@@ -61,8 +61,9 @@ export class ProductsServiceService {
     page: number,
     pageSize: number,
     title: string | null,
-  ): Promise<ProductResponse[]> {
-    const skip = (page - 1) * pageSize;
+  ): Promise<any> {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
     let products = [];
     let resultDTO: ProductResponse[] = [];
     if (title != null) {
@@ -74,8 +75,6 @@ export class ProductsServiceService {
         .leftJoinAndSelect('p.images', 'images')
         .leftJoinAndSelect('p.attributeValues', 'attributeValues')
         .orderBy('p.creationDate', 'DESC')
-        .skip(skip)
-        .take(pageSize)
         .getMany();
     } else {
       products = await this.productsRepository
@@ -84,18 +83,17 @@ export class ProductsServiceService {
         .leftJoinAndSelect('p.images', 'images')
         .leftJoinAndSelect('p.attributeValues', 'attributeValues')
         .orderBy('p.creationDate', 'DESC')
-        .skip(skip)
-        .take(pageSize)
         .getMany();
     }
-    products.forEach(async (product) => {
+    const selectedProducts = products.splice(startIndex, endIndex);
+    selectedProducts.forEach(async (product) => {
       let result: ProductResponse = {
         ...product,
         comments: [],
       };
       resultDTO.push(result);
     });
-    return resultDTO;
+    return { products: resultDTO, total: products };
   }
 
   async getAllProductsForBuyer(
@@ -103,8 +101,9 @@ export class ProductsServiceService {
     pageSize: number,
     title: string | null,
     id: string,
-  ): Promise<ProductResponse[]> {
-    const skip = (page - 1) * pageSize;
+  ): Promise<any> {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
     let products = [];
     let resultDTO: ProductResponse[] = [];
     if (title != null) {
@@ -116,8 +115,6 @@ export class ProductsServiceService {
         )
         .leftJoinAndSelect('p.images', 'images')
         .leftJoinAndSelect('p.attributeValues', 'attributeValues')
-        .skip(skip)
-        .take(pageSize)
         .getMany();
     } else {
       products = await this.productsRepository
@@ -125,11 +122,10 @@ export class ProductsServiceService {
         .where('p.userBuyer = :id AND p.finished = 1', { id })
         .leftJoinAndSelect('p.images', 'images')
         .leftJoinAndSelect('p.attributeValues', 'attributeValues')
-        .skip(skip)
-        .take(pageSize)
         .getMany();
     }
-    for (const product of products) {
+    const selectedProducts = products.splice(startIndex, endIndex);
+    for (const product of selectedProducts) {
       let result: ProductResponse = {
         ...product,
         comments: [],
@@ -137,7 +133,7 @@ export class ProductsServiceService {
       resultDTO.push(result);
     }
 
-    return resultDTO;
+    return { products: resultDTO, total: products.length };
   }
 
   async getAllProductsForSeller(
@@ -146,8 +142,9 @@ export class ProductsServiceService {
     finished: number,
     title: string | null,
     id: string,
-  ): Promise<ProductResponse[]> {
-    const skip = (page - 1) * pageSize;
+  ): Promise<any> {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
     let products = [];
     let resultDTO: ProductResponse[] = [];
     if (title != null) {
@@ -159,8 +156,6 @@ export class ProductsServiceService {
         )
         .leftJoinAndSelect('p.images', 'images')
         .leftJoinAndSelect('p.attributeValues', 'attributeValues')
-        .skip(skip)
-        .take(pageSize)
         .getMany();
     } else {
       products = await this.productsRepository
@@ -171,18 +166,17 @@ export class ProductsServiceService {
         })
         .leftJoinAndSelect('p.images', 'images')
         .leftJoinAndSelect('p.attributeValues', 'attributeValues')
-        .skip(skip)
-        .take(pageSize)
         .getMany();
     }
-    for (const product of products) {
+    const selectedProducts = products.splice(startIndex, endIndex);
+    for (const product of selectedProducts) {
       let result: ProductResponse = {
         ...product,
         comments: [],
       };
       resultDTO.push(result);
     }
-    return resultDTO;
+    return { products: resultDTO, total: products.length };
   }
 
   async getById(id: string): Promise<any> {
@@ -275,8 +269,9 @@ export class ProductsServiceService {
     page: number,
     pageSize: number,
     request: SearchRequest,
-  ): Promise<Product[]> {
-    const skip = (page - 1) * pageSize;
+  ): Promise<any> {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
 
     const queryBuilder = this.productsRepository.createQueryBuilder('product');
 
@@ -332,12 +327,12 @@ export class ProductsServiceService {
     }
 
     const products = await queryBuilder
-      .skip(skip)
       .leftJoinAndSelect('product.images', 'images')
       .leftJoinAndSelect('product.attributeValues', 'attributeValues')
-      .take(pageSize)
       .getMany();
-    return products;
+
+    const selectedProducts = products.splice(startIndex, endIndex);
+    return { products: selectedProducts, total: products.length };
   }
 
   async deleteAttributeValue(attributeId: string): Promise<any> {

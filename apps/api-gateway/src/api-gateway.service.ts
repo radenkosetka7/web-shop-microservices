@@ -33,7 +33,7 @@ export class ApiGatewayService {
     @Inject('CATEGORY_SERVICE') private readonly categoryClient: ClientProxy,
   ) {}
 
-  async getUsers(page: number, pageSize: number): Promise<AdminUserResponse[]> {
+  async getUsers(page: number, pageSize: number): Promise<any> {
     return await lastValueFrom(
       this.userClient.send('getUsers', { page, pageSize }),
     );
@@ -104,7 +104,7 @@ export class ApiGatewayService {
     );
   }
 
-  async getAllMessages(page: number, pageSize: number): Promise<Array<any>> {
+  async getAllMessages(page: number, pageSize: number): Promise<any> {
     return await lastValueFrom(
       this.messageClient.send('getAllMessages', { page, pageSize }),
     );
@@ -127,7 +127,7 @@ export class ApiGatewayService {
     page: number,
     pageSize: number,
     title: string,
-  ): Promise<ProductResponse[]> {
+  ): Promise<any> {
     return await lastValueFrom(
       this.productClient.send('getProducts', { page, pageSize, title }),
     );
@@ -146,7 +146,7 @@ export class ApiGatewayService {
     pageSize: number,
     title: string,
     id: string,
-  ): Promise<ProductResponse[]> {
+  ): Promise<any> {
     return await lastValueFrom(
       this.productClient.send('purchasedProducts', {
         page,
@@ -163,7 +163,7 @@ export class ApiGatewayService {
     title: string,
     finished: number,
     id: string,
-  ): Promise<ProductResponse[]> {
+  ): Promise<any> {
     return await lastValueFrom(
       this.productClient.send('soldProducts', {
         page,
@@ -260,7 +260,7 @@ export class ApiGatewayService {
     page: number,
     pageSize: number,
     request: SearchRequest,
-  ): Promise<Product[]> {
+  ): Promise<any> {
     return await lastValueFrom(
       this.productClient.send('searchProducts', {
         page,

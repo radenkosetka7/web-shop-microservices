@@ -60,7 +60,7 @@ export class ApiGatewayController {
   async getUsers(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
-  ): Promise<AdminUserResponse[]> {
+  ): Promise<any> {
     return await this.apiGatewayService.getUsers(page, pageSize);
   }
 
@@ -256,7 +256,7 @@ export class ApiGatewayController {
   async getAllMessages(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
-  ): Promise<Array<any>> {
+  ): Promise<any> {
     return await this.apiGatewayService.getAllMessages(page, pageSize);
   }
 
@@ -317,7 +317,7 @@ export class ApiGatewayController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
     @Query('title') title: string | null,
-  ): Promise<ProductResponse[]> {
+  ): Promise<any> {
     return await this.apiGatewayService.getAllProducts(page, pageSize, title);
   }
 
@@ -357,7 +357,7 @@ export class ApiGatewayController {
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
     @Query('title') title: string | null,
     @Req() request: Request,
-  ): Promise<ProductResponse[]> {
+  ): Promise<any> {
     const authenticatedUser = request['user'];
     return await this.apiGatewayService.getAllProductsForBuyer(
       page,
@@ -376,7 +376,7 @@ export class ApiGatewayController {
     @Query('title') title: string | null,
     @Query('finished', new DefaultValuePipe(0), ParseIntPipe) finished: number,
     @Req() request: Request,
-  ): Promise<ProductResponse[]> {
+  ): Promise<any> {
     const authenticatedUser = request['user'];
     return await this.apiGatewayService.getAllProductsForSeller(
       page,
@@ -424,7 +424,7 @@ export class ApiGatewayController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
     @Body() searchRequest: SearchRequest,
-  ): Promise<Product[]> {
+  ): Promise<any> {
     return await this.apiGatewayService.searchProducts(
       page,
       pageSize,

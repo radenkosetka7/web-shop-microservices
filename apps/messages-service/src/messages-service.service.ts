@@ -22,15 +22,13 @@ export class MessagesServiceService {
     return await this.messagesRepository.save(messageReq);
   }
 
-  async getAll(page: number, pageSize: number): Promise<Array<any>> {
-    const skip = (page - 1) * pageSize;
-    const messages = await this.messagesRepository
-      .createQueryBuilder('m')
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
+  async getAll(page: number, pageSize: number): Promise<any> {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
+    const messages = await this.messagesRepository.find();
+    const selectedMessages = messages.splice(startIndex, endIndex);
     const messagesResp = await Promise.all(
-      messages.map(async (message) => {
+      selectedMessages.map(async (message) => {
         const userInfo = await lastValueFrom(
           this.userClient.send('getUserById', message.user),
         );
@@ -38,7 +36,7 @@ export class MessagesServiceService {
         return { ...message, user: userInfo };
       }),
     );
-    return messagesResp;
+    return { messages: messagesResp, total: messages.length };
   }
 
   async getById(id: string): Promise<any> {

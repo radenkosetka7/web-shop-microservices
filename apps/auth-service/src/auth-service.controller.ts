@@ -33,7 +33,7 @@ export class AuthServiceController {
   }
 
   @MessagePattern('getUsers')
-  async findAll(data: any): Promise<AdminUserResponse[]> {
+  async findAll(data: any): Promise<any> {
     const { page, pageSize } = data;
     return await this.authServiceService.getAll(page, pageSize);
   }

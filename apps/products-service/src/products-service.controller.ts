@@ -19,7 +19,7 @@ export class ProductsServiceController {
     return await this.productsServiceService.createProduct(product, id);
   }
   @MessagePattern('getProducts')
-  async getAll(data: any): Promise<ProductResponse[]> {
+  async getAll(data: any): Promise<any> {
     const { page, pageSize, title } = data;
     return await this.productsServiceService.getAll(page, pageSize, title);
   }
@@ -42,7 +42,7 @@ export class ProductsServiceController {
   }
 
   @MessagePattern('purchasedProducts')
-  async getAllProductsForBuyer(data: any): Promise<ProductResponse[]> {
+  async getAllProductsForBuyer(data: any): Promise<any> {
     const { page, pageSize, title, id } = data;
     return await this.productsServiceService.getAllProductsForBuyer(
       page,
@@ -53,7 +53,7 @@ export class ProductsServiceController {
   }
 
   @MessagePattern('soldProducts')
-  async getAllProductsForSeller(data: any): Promise<ProductResponse[]> {
+  async getAllProductsForSeller(data: any): Promise<any> {
     const { page, pageSize, title, finished, id } = data;
     return await this.productsServiceService.getAllProductsForSeller(
       page,
@@ -90,7 +90,7 @@ export class ProductsServiceController {
   }
 
   @MessagePattern('searchProducts')
-  async searchProducts(data: any): Promise<Product[]> {
+  async searchProducts(data: any): Promise<any> {
     const { page, pageSize, request } = data;
     return await this.productsServiceService.searchProducts(
       page,

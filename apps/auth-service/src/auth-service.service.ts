@@ -16,6 +16,7 @@ import { AdminCreateUserRequest } from './models/requests/admin-user.request';
 import { AdminUpdateUserRequest } from './models/requests/admin-user-update.request';
 import { AccountActivationRequest } from './models/requests/activate-account.request';
 import { lastValueFrom } from 'rxjs';
+import { Not } from 'typeorm';
 
 @Injectable()
 export class AuthServiceService implements OnModuleInit {
@@ -97,13 +98,22 @@ export class AuthServiceService implements OnModuleInit {
   }
 
   async register(user: RegisterRequest): Promise<any> {
-    const existingUser = await this.repository.findOne({
-      where: [{ username: user.username }, { email: user.email }],
+    const existingUserEmail = await this.repository.findOne({
+      where: { email: user.email },
     });
-    if (existingUser) {
+    if (existingUserEmail) {
       return {
         statusCode: 409,
-        message: 'User with given e-mail or username already exist.',
+        message: 'User with given e-mail already exist.',
+      };
+    }
+    const existingUserUsername = await this.repository.findOne({
+      where: { username: user.username },
+    });
+    if (existingUserUsername) {
+      return {
+        statusCode: 409,
+        message: 'User with given username already exist.',
       };
     }
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -145,21 +155,20 @@ export class AuthServiceService implements OnModuleInit {
     };
   }
 
-  async getAll(page: number, pageSize: number): Promise<AdminUserResponse[]> {
-    const skip = (page - 1) * pageSize;
-    const users = await this.repository
-      .createQueryBuilder('u')
-      .where('u.role != :adminRole', { adminRole: UserRole.ADMIN })
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
-    const adminUserResponses = users.map((user) => {
+  async getAll(page: number, pageSize: number): Promise<any> {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
+    const users = await this.repository.find({
+      where: { role: Not(UserRole.ADMIN) },
+    });
+    const selectedUsers = users.splice(startIndex, endIndex);
+    const adminUserResponses = selectedUsers.map((user) => {
       const adminUserResponse = new AdminUserResponse(user);
       adminUserResponse.role = UserRole[user.role];
       adminUserResponse.status = UserStatus[user.status];
       return adminUserResponse;
     });
-    return adminUserResponses;
+    return { users: adminUserResponses, total: users.length };
   }
 
   async getUserByUsername(username: string, status: number): Promise<any> {
@@ -222,6 +231,9 @@ export class AuthServiceService implements OnModuleInit {
       const user = await this.repository.findOne({ where: { id: id } });
       if (!user) {
         return { statusCode: 404, message: 'User does not exist.' };
+      }
+      if (user.id !== id) {
+        return { statusCode: 403, message: 'Forbidden.' };
       }
       user.password = changePassword.password;
       await this.repository.save(user);
