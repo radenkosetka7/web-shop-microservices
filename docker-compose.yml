@@ -1,0 +1,147 @@
+version: '3'
+services:
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
+
+  auth-database:
+    image: 'postgres:alpine'
+    environment:
+      POSTGRES_DB: ${AUTH_DATABASE}
+      POSTGRES_USER: ${AUTH_USER}
+      POSTGRES_PASSWORD: ${AUTH_PASSWORD}
+    ports:
+      - '${AUTH_PORT}:${AUTH_PORT}'
+
+  categories-database:
+    image: 'postgres:alpine'
+    environment:
+      POSTGRES_DB: ${CATEGORIES_DATABASE}
+      POSTGRES_USER: ${CATEGORIES_USER}
+      POSTGRES_PASSWORD: ${CATEGORIES_PASSWORD}
+    ports:
+      - '${CATEGORIES_PORT}:${CATEGORIES_PORT}'
+
+  comments-database:
+    image: 'postgres:alpine'
+    environment:
+      POSTGRES_DB: ${COMMENTS_DATABASE}
+      POSTGRES_USER: ${COMMENTS_USER}
+      POSTGRES_PASSWORD: ${COMMENTS_PASSWORD}
+    ports:
+      - '${COMMENTS_PORT}:${COMMENTS_PORT}'
+
+  messages-database:
+    image: 'postgres:alpine'
+    environment:
+      POSTGRES_DB: ${MESSAGES_DATABASE}
+      POSTGRES_USER: ${MESSAGES_USER}
+      POSTGRES_PASSWORD: ${MESSAGES_PASSWORD}
+    ports:
+      - '${MESSAGES_PORT}:${MESSAGES_PORT}'
+
+  products-database:
+    image: 'postgres:alpine'
+    environment:
+      POSTGRES_DB: ${PRODUCTS_DATABASE}
+      POSTGRES_USER: ${PRODUCTS_USER}
+      POSTGRES_PASSWORD: ${PRODUCTS_PASSWORD}
+    ports:
+      - '${PRODUCTS_PORT}:${PRODUCTS_PORT}'
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+    command: npm run start:dev api-gateway
+    ports:
+      - '${GATEWAY_PORT}:${GATEWAY_PORT}'
+    env_file:
+      - ./apps/api-gateway/.env
+    depends_on:
+      - auth-service
+      - categories-service
+      - comments-service
+      - emails-service
+      - messages-service
+      - products-service
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  emails-service:
+    build:
+      context: .
+      dockerfile: ./apps/emails-service/Dockerfile
+    command: npm run start:dev emails-service
+    env_file: ./apps/emails-service/.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: ./apps/auth-service/Dockerfile
+    command: npm run start:dev auth-service
+    env_file: ./apps/auth-service/.env
+    depends_on:
+      - redis
+      - auth-database
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  categories-service:
+    build:
+      context: .
+      dockerfile: ./apps/categories-service/Dockerfile
+    command: npm run start:dev categories-service
+    env_file: ./apps/categories-service/.env
+    depends_on:
+      - redis
+      - categories-database
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  comments-service:
+    build:
+      context: .
+      dockerfile: ./apps/comments-service/Dockerfile
+    command: npm run start:dev comments-service
+    env_file: ./apps/comments-service/.env
+    depends_on:
+      - redis
+      - comments-database
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  messages-service:
+    build:
+      context: .
+      dockerfile: ./apps/messages-service/Dockerfile
+    command: npm run start:dev messages-service
+    env_file: ./apps/messages-service/.env
+    depends_on:
+      - redis
+      - messages-database
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  products-service:
+    build:
+      context: .
+      dockerfile: ./apps/products-service/Dockerfile
+    command: npm run start:dev products-service
+    env_file: ./apps/products-service/.env
+    depends_on:
+      - redis
+      - products-database
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules

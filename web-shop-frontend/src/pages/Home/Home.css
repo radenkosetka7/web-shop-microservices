@@ -1,0 +1,27 @@
+.contentStyle {
+    text-align: center;
+    color: #fff;
+    backgroundColor: #f3f1f1;
+}
+
+.siderStyle {
+    text-align: center;
+    color: #fff;
+}
+
+.productCard {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    box-sizing: border-box;
+}
+.footerStyle {
+    text-align: center;
+    color: #fff;
+}
+
+.contentDiv {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: 20px;
+}

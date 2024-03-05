@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.form-titleEdit {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
+}
+.errorEdit {
+    color: #ff0000;
+    font-size: 14px;
+    margin-left: 30%;
+    font-weight: bold;
+}
+
+.linearGradientEdit {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #e6e6e6;
+    width: 410px;
+    height: 90%;
+    border-radius: 10px;
+    border: 2px solid lightseagreen;
+    overflow: auto;
+
+}

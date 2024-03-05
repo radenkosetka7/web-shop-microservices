@@ -1,0 +1,14 @@
+/* styles.css */
+
+.round-image-container {
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.round-image {
+    display: block;
+    height: 60px;
+    width: 65px;
+
+}
