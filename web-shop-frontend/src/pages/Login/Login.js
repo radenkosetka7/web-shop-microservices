@@ -18,21 +18,34 @@ const Login = () => {
 
     const onSubmit = async (loginData) => {
         const response = await dispatch(login(loginData));
-        if(response.error)
+        if(response.payload?.data?.message)
         {
-            if(response.error.message === "401")
-            {
-                setStatusCode(response.error.message);
-                setTimeout(() => {
-                    navigate("/activateAccount", {state: {username: loginData.username}});
-                }, 2000);
-                return;
-            }
-            else {
-                setStatusCode(response.error.message);
-                return;
-            }
+          setStatusCode('200');
+          setTimeout(() => {
+            navigate("/activateAccount", {state: {username: loginData.username}});
+          }, 2000);
+          return;
         }
+        else if(response.error)
+        {
+          setStatusCode(response.error.message);
+          return;
+        }
+        // if(response.error)
+        // {
+        //     if(response.error.message === "200")
+        //     {
+        //         setStatusCode(response.error.message);
+        //         setTimeout(() => {
+        //             navigate("/activateAccount", {state: {username: loginData.username}});
+        //         }, 2000);
+        //         return;
+        //     }
+        //     else {
+        //         setStatusCode(response.error.message);
+        //         return;
+        //     }
+        // }
         dispatch(getLoggedUser({}));
         nav('/');
     }

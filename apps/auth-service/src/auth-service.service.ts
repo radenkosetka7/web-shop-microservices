@@ -147,11 +147,18 @@ export class AuthServiceService implements OnModuleInit {
     }
     const userTemp = await this.getUserByUsername(loginReq.username, 1);
     if (userTemp) {
-      return await this.sendActivationCode(userTemp.username, userTemp.email);
+      const isMatchTemp: boolean = bcrypt.compareSync(
+        loginReq.password,
+        userTemp.password,
+      );
+      if (isMatchTemp) {
+        this.sendActivationCode(userTemp.username, userTemp.email);
+        return { message: 'Activation code has been sent' };
+      }
     }
     return {
       statusCode: 404,
-      message: 'Invalid credentials. Please try again.',
+      message: 'Invalid credentials. User not found.',
     };
   }
 

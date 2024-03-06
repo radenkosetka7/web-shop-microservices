@@ -26,6 +26,7 @@ export class MessagesServiceService {
     const startIndex = (page - 1) * pageSize;
     const endIndex = page * pageSize;
     const messages = await this.messagesRepository.find();
+    const total = messages.length;
     const selectedMessages = messages.splice(startIndex, endIndex);
     const messagesResp = await Promise.all(
       selectedMessages.map(async (message) => {
@@ -36,7 +37,7 @@ export class MessagesServiceService {
         return { ...message, user: userInfo };
       }),
     );
-    return { messages: messagesResp, total: messages.length };
+    return { messages: messagesResp, total: total };
   }
 
   async getById(id: string): Promise<any> {
