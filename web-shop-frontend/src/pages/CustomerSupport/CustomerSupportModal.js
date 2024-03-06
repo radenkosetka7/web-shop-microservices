@@ -1,9 +1,8 @@
-import { Button, Modal, Input, Form, Select } from 'antd';
+import { Button, Modal, Input, Form } from 'antd';
 import {useDispatch} from "react-redux";
 import {createMessage} from "../../redux-store/messageSlice";
 import React, {useState} from "react";
 const { TextArea } = Input;
-const { Option } = Select;
 const CustomerSupportModal = ({show,onClose}) => {
     const dispatch = useDispatch();
     const handleClick = (e) => {

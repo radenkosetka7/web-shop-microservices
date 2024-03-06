@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from 'react';
 import {useNavigate, Link, useLocation} from "react-router-dom";
 import {activateAccount} from "../../services/auth.service";
-import {getUser} from "../../redux-store/userSlice";
 
 const ActivateAccount = () => {
 

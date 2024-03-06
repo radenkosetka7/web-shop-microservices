@@ -1,4 +1,4 @@
-import {Button, Form, Input, InputNumber, Select} from "antd";
+import {Button, Form, Select} from "antd";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getCategories} from "../../redux-store/categorySlice";

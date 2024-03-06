@@ -2,7 +2,6 @@ import React from 'react';
 import {Button, Card} from 'antd';
 import './Card.css';
 import {useDispatch, useSelector} from "react-redux";
-import userSlice from "../../redux-store/userSlice";
 import {Link} from "react-router-dom";
 import {DeleteOutlined} from "@ant-design/icons";
 import {deleteProduct} from "../../redux-store/productSlice";

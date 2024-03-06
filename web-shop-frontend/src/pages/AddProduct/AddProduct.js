@@ -1,4 +1,4 @@
-import {Modal, Input, Select, Steps,} from 'antd';
+import {Modal,Steps,} from 'antd';
 import {useDispatch} from "react-redux";
 import React, {useState} from "react";
 import GeneralForm from "../Forms/GeneralForm";
@@ -8,8 +8,6 @@ import AttributeForm from "../Forms/AttributeForm";
 import Finished from "../Forms/Finished";
 import {uploadImages} from "../../services/product.service";
 import {createProduct} from "../../redux-store/productSlice";
-const { TextArea } = Input;
-const { Option } = Select;
 const AddProduct = ({show,onClose}) => {
     const dispatch = useDispatch();
     const handleClick = (e) => {

@@ -21,8 +21,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 8%;
-    gap: 60px;
+    margin-right: 6%;
 }
 
 .map-text,

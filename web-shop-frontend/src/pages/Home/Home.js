@@ -252,8 +252,8 @@ const Home = () => {
             <Layout>
                 <Content className='contentStyle'>
                     <div className='contentDiv'>
-                        {products && products.length !== 0 ? (
-                                products.content.map(product => (
+                        {products.products && products.products.length !== 0 ? (
+                                products.products.map(product => (
                                     <div className='productCard'>
                                     <CardComponent key={product.id} product={product} handleChangeRefreshKey={handleChangeRefreshKey}/>
                                     </div>
@@ -265,13 +265,13 @@ const Home = () => {
                     </div>
                 </Content>
                 <Footer style={{backgroundColor: "#1d8f8a"}} className='footerStyle'>
-                    {products && products.totalElements && (
+                    {products && products.total && (
                         <Pagination
                             showSizeChanger
                             onShowSizeChange={onShowSizeChange}
                             onChange={handlePaginationChange}
                             current={current}
-                            total={products.totalElements}
+                            total={products.total}
                         />
                     )}
                 </Footer>

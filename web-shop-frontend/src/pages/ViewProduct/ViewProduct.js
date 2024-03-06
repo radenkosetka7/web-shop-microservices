@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Avatar, Button, Card, Form, Input, Layout, List} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Avatar, Button, Card, Input, Layout, List} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import SimpleImageSlider from "react-simple-image-slider";

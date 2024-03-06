@@ -1,7 +1,6 @@
-import {Button, FloatButton, Form, Input, InputNumber, Switch} from "antd";
+import {Button, Form, Input, InputNumber, Switch} from "antd";
 import React, {useState} from "react";
 import TextArea from "antd/es/input/TextArea";
-import {CommentOutlined, CustomerServiceOutlined} from "@ant-design/icons";
 
 
 const GeneralForm = ({onFinish, initialValues}) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Button, Form, Input, InputNumber} from "antd";
-import {getCategories, getCategory} from "../../redux-store/categorySlice";
+import {getCategory} from "../../redux-store/categorySlice";
 import {useDispatch, useSelector} from "react-redux";
 
 const AttributeForm = ({ onFinish, categoryId, initialValues }) => {

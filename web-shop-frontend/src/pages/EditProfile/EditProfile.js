@@ -11,31 +11,30 @@ const EditProfile = ({show,onClose}) => {
     const [isDisabled, setIsDisabled] = useState(false);
     const dispatch= useDispatch();
     const {user} = useSelector((state)=>state.users);
-    const [selectedFile, setSelectedFile] = useState();
-    const [tempVariable, setTempVariable] = useState(null);
+    const [selectedFile, setSelectedFile] = useState('');
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
-        setTempVariable(1);
     };
 
     const handleFormSubmit = async (values) => {
         setIsDisabled(true)
 
         if (user.name !== values.name || user.surname !== values.surname || user.mail !== values.mail ||
-            user.city !== values.city || tempVariable !== null) {
+            user.city !== values.city || selectedFile) {
 
             let responseImage = null;
-            if (tempVariable !== null) {
+            if (selectedFile) {
                 const formData = new FormData();
                 formData.append("file", selectedFile);
-                responseImage = await uploadImage(formData);
+                const upload = await uploadImage(formData);
+                responseImage = upload.data.data;
             }
             await new Promise(resolve => setTimeout(resolve, 1500));
             const uploadData = {
                 name:values.name,
                 surname:values.surname,
                 city: values.city,
-                avatar: tempVariable !==null ? responseImage.data : user.avatar,
+                avatar: responseImage ? responseImage : user.avatar,
                 mail:values.mail
             };
             await dispatch(updateUser({id:user.id,value:uploadData}));

@@ -196,6 +196,7 @@ export class AuthServiceService implements OnModuleInit {
       city: user.city,
       avatar: user.avatar,
       email: user.email,
+      role: user.role,
     };
     return filteredData;
   }
