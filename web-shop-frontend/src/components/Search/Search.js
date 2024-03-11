@@ -15,7 +15,7 @@ const SearchComponent = (props) => {
                 <Space direction="vertical" className='componentSpace' >
                     <Search
                         onSearch={onSearch}
-                        placeholder="Search by product name..."
+                        placeholder="Search..."
                     />
                 </Space>
             </div>

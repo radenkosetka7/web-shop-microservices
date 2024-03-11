@@ -28,7 +28,7 @@ const CustomerSupportModal = ({show,onClose}) => {
     return (
         <>
             <Modal maskClosable={false} title={<div style={{ textAlign: 'center', fontSize: '20px' }}>Customer Support</div>} footer={[
-            ]} open={show} onCancel={onClose}  bodyStyle={{ maxHeight: '300px', overflowY: 'auto' }}>
+            ]} open={show} onCancel={onClose}>
                 <Form
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 14 }}

@@ -33,9 +33,9 @@ export const updateUser = (idUser,dataToUpdate) => {
         .then((results) => results.data);
 };
 
-export const changePassword = (idUser,dataToUpdate) => {
+export const changePassword = (dataToUpdate) => {
     return instance
-        .put(gateway+`users/${idUser}/changePassword`,dataToUpdate)
+        .put(gateway+'changePassword',dataToUpdate)
         .then((results) => results.data);
 };
 

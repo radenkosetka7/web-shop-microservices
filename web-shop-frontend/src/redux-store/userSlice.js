@@ -21,11 +21,10 @@ export const getUser = createAsyncThunk("users/getUser", async ({id}) => {
     return await userService.getUser(id);
 });
 export const changePassword = createAsyncThunk("users/changePassword", async ({
-                                                                          id,
                                                                           value
                                                                       }, {rejectWithValue}) => {
     try {
-        return await userService.changePassword(id, value);
+        return await userService.changePassword(value);
     } catch (err) {
         return rejectWithValue("Error while updating model. Please try later.");
     }

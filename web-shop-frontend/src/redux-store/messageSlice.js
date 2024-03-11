@@ -10,9 +10,9 @@ export const createMessage= createAsyncThunk("messages/createMessage", async ({v
     }
 });
 
-export const getMessages= createAsyncThunk("messages", async ({page,size}, {rejectWithValue}) => {
+export const getMessages= createAsyncThunk("messages", async ({page,size,content}, {rejectWithValue}) => {
     try {
-        return await messageService.getMessages(page,size);
+        return await messageService.getMessages(page,size,content);
     } catch (err) {
         return rejectWithValue("Error while adding new message. Please try later.");
     }
@@ -35,9 +35,9 @@ export const getMessage= createAsyncThunk("messages/getMessage", async ({value},
     }
 });
 
-export const replyMessage= createAsyncThunk("messages/getMessage", async ({mail,question,answer}, {rejectWithValue}) => {
+export const replyMessage= createAsyncThunk("messages/getMessage", async ({value}, {rejectWithValue}) => {
     try {
-        return await messageService.replyMessage(mail,question,answer);
+        return await messageService.replyMessage(value);
     } catch (err) {
         return rejectWithValue("Error while adding new message. Please try later.");
     }

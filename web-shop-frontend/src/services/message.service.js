@@ -14,12 +14,13 @@ export const readMessage = (idMessage) => {
         .then((results) => results.data);
 };
 
-export const getMessages = (page,size) => {
+export const getMessages = (page,size,content) => {
     return instance
         .get(gateway+'messages', {
             params: {
                 page: page,
-                size: size
+                size: size,
+                content: content
             },
         })
         .then((results)=>results.data);
@@ -32,15 +33,9 @@ export const getMessage = (idMessage) => {
         .then((results) => results.data);
 };
 
-export const replyMessage = (mail,question,answer) => {
+export const replyMessage = (replyData) => {
     return instance
-        .post(gateway+'replyMessage', {
-            params: {
-                mail: mail,
-                question: question,
-                answer: answer
-            },
-        })
+        .post(gateway+'replyMessage', replyData)
         .then((results)=>results.data);
 };
 

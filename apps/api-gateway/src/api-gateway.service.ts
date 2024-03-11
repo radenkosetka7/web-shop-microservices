@@ -104,9 +104,13 @@ export class ApiGatewayService {
     );
   }
 
-  async getAllMessages(page: number, pageSize: number): Promise<any> {
+  async getAllMessages(
+    page: number,
+    pageSize: number,
+    content: string,
+  ): Promise<any> {
     return await lastValueFrom(
-      this.messageClient.send('getAllMessages', { page, pageSize }),
+      this.messageClient.send('getAllMessages', { page, pageSize, content }),
     );
   }
 

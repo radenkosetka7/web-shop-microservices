@@ -48,6 +48,7 @@ import { Roles } from './util/roles.decorator';
 import { UserRole } from 'apps/auth-service/src/models/enums/user-role.enum';
 import { AuthGuard } from './guards/auth.guard';
 import { RolesGuard } from './guards/role.guard';
+import { ReplyRequest } from 'apps/messages-service/src/models/requests/reply.request';
 
 @Controller('gateway')
 @UseFilters(AllExceptionsFilter)
@@ -142,15 +143,16 @@ export class ApiGatewayController {
     }
     return user;
   }
-  @Roles(UserRole.ORDINARY)
-  @UseGuards(AuthGuard, RolesGuard)
-  @Put('users/:id/changePassword')
+  @UseGuards(AuthGuard)
+  @Put('changePassword')
   async changePassword(
-    @Param('id') id: string,
     @Body() changePassword: ChangePasswordRequest,
+    @Req() request: Request,
   ): Promise<any> {
+    const authenticatedUser = request['user'];
+
     const user = await this.apiGatewayService.changePassword(
-      id,
+      authenticatedUser.sub,
       changePassword,
     );
     if (user?.statusCode) {
@@ -256,8 +258,9 @@ export class ApiGatewayController {
   async getAllMessages(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
+    @Query('content', new DefaultValuePipe('')) content: string,
   ): Promise<any> {
-    return await this.apiGatewayService.getAllMessages(page, pageSize);
+    return await this.apiGatewayService.getAllMessages(page, pageSize, content);
   }
 
   @Roles(UserRole.SUPPORT)
@@ -278,11 +281,8 @@ export class ApiGatewayController {
   @Post('replyMessage')
   @Roles(UserRole.SUPPORT)
   @UseGuards(AuthGuard, RolesGuard)
-  async replyMessage(
-    @Query('mail') mail: string,
-    @Query('question') question: string,
-    @Query('answer') answer: string,
-  ): Promise<any> {
+  async replyMessage(@Body() reply: ReplyRequest): Promise<any> {
+    const { mail, question, answer } = reply;
     const result = await this.apiGatewayService.replyMessage(
       mail,
       question,

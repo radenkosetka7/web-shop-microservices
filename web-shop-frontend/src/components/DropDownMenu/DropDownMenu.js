@@ -8,29 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import CustomerSupportModal from "../../pages/CustomerSupport/CustomerSupportModal";
 import AddProduct from "../../pages/AddProduct/AddProduct";
+import ChangePassword from "../ChangePassword/ChangePassword";
 
-const items = [
-    {
-        key: '1',
-        label: 'My profile',
-        icon: <UserOutlined/>
-    },
-    {
-        key: '2',
-        label: 'New offer',
-        icon: <PlusSquareOutlined/>
-    },
-    {
-        key: '3',
-        label: 'Support',
-        icon: <QuestionOutlined/>
-    },
-    {
-        key: '4',
-        label: 'Logout',
-        icon: <LogoutOutlined/>
-    },
-];
 
 const DropDownMenu = () => {
 
@@ -38,7 +17,49 @@ const DropDownMenu = () => {
     const navigate = useNavigate();
     const {loggedUser} = useSelector((state) => state.users);
 
+    const generateDynamicItems = () => {
+        const dynamicItems = [];
+
+        if (loggedUser.role == 0 || loggedUser.role == 1) {
+            dynamicItems.push({
+                key: '5',
+                label: 'Change password',
+                icon: <QuestionOutlined/>
+            });
+
+            dynamicItems.push({
+                key: '4',
+                label: 'Logout',
+                icon: <LogoutOutlined/>
+            });
+        } else {
+            dynamicItems.push({
+                key: '1',
+                label: 'My profile',
+                icon: <UserOutlined/>
+            });
+            dynamicItems.push({
+                key: '2',
+                label: 'New offer',
+                icon: <PlusSquareOutlined/>
+            });
+            dynamicItems.push({
+                key: '3',
+                label: 'Support',
+                icon: <QuestionOutlined/>
+            });
+            dynamicItems.push({
+                key: '4',
+                label: 'Logout',
+                icon: <LogoutOutlined/>
+            });
+        }
+
+        return dynamicItems;
+    };
     const [supportModal, setSupportModal] = useState(false);
+    const [changePasswordModal, setChangePasswordModal] = useState(false);
+
     const [addProductModal, setAddProductModal] = useState(false);
     const onClick = ({key}) => {
         if (key === '4') {
@@ -54,11 +75,19 @@ const DropDownMenu = () => {
         {
             navigate('/myProfile');
         }
+        else if( key == '5')
+        {
+            setChangePasswordModal(true);
+        }
     };
 
     const handleCloseSupportModal = () => {
         setSupportModal(false);
     };
+    const handleCloseChangePasswordModal = () => {
+        setChangePasswordModal(false);
+    };
+
 
     const handleCloseAddProductModal = () => {
         setAddProductModal(false);
@@ -73,10 +102,10 @@ const DropDownMenu = () => {
     return (
         <div>
             <Dropdown
-                menu={{
-                    items,
-                    onClick
-                }}
+              menu={{
+                  items: generateDynamicItems(),
+                  onClick
+              }}
             >
                 <a onClick={(e) => e.preventDefault()}>
                     <div className='logo-map'>
@@ -88,6 +117,7 @@ const DropDownMenu = () => {
             </Dropdown>
             { supportModal && <CustomerSupportModal show={supportModal} onClose={handleCloseSupportModal}/> }
             { addProductModal && <AddProduct show={addProductModal} onClose={handleCloseAddProductModal}/> }
+            { changePasswordModal && <ChangePassword show={changePasswordModal} onClose={handleCloseChangePasswordModal}/> }
         </div>
 
     );

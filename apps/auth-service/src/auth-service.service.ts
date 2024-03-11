@@ -236,6 +236,9 @@ export class AuthServiceService implements OnModuleInit {
     changePassword: ChangePasswordRequest,
   ): Promise<any> {
     try {
+      if (changePassword.password !== changePassword.confirmPassword) {
+        return { statusCode: 400, message: 'Passwords must match.' };
+      }
       const user = await this.repository.findOne({ where: { id: id } });
       if (!user) {
         return { statusCode: 404, message: 'User does not exist.' };
@@ -243,7 +246,8 @@ export class AuthServiceService implements OnModuleInit {
       if (user.id !== id) {
         return { statusCode: 403, message: 'Forbidden.' };
       }
-      user.password = changePassword.password;
+      const hashedPassword = await bcrypt.hash(changePassword.password, 10);
+      user.password = hashedPassword;
       await this.repository.save(user);
       return 'Password successfully changed.';
     } catch (error) {

@@ -22,12 +22,21 @@ export class MessagesServiceService {
     return await this.messagesRepository.save(messageReq);
   }
 
-  async getAll(page: number, pageSize: number): Promise<any> {
+  async getAll(page: number, pageSize: number, content: string): Promise<any> {
     const startIndex = (page - 1) * pageSize;
     const endIndex = page * pageSize;
-    const messages = await this.messagesRepository.find();
-    const total = messages.length;
-    const selectedMessages = messages.splice(startIndex, endIndex);
+    let queryBuilder = this.messagesRepository.createQueryBuilder('m');
+
+    if (content !== '') {
+      queryBuilder = queryBuilder.where(
+        'LOWER(m.question) LIKE LOWER(:content)',
+        {
+          content: `%${content}%`,
+        },
+      );
+    }
+    const [messages, total] = await queryBuilder.getManyAndCount();
+    const selectedMessages = messages.slice(startIndex, endIndex);
     const messagesResp = await Promise.all(
       selectedMessages.map(async (message) => {
         const userInfo = await lastValueFrom(

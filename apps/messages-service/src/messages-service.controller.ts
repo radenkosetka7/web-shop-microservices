@@ -17,8 +17,8 @@ export class MessagesServiceController {
 
   @MessagePattern('getAllMessages')
   async getAll(data: any): Promise<any> {
-    const { page, pageSize } = data;
-    return await this.messagesServiceService.getAll(page, pageSize);
+    const { page, pageSize, content } = data;
+    return await this.messagesServiceService.getAll(page, pageSize, content);
   }
 
   @MessagePattern('getMessage')
