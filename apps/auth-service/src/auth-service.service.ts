@@ -168,7 +168,7 @@ export class AuthServiceService implements OnModuleInit {
     const users = await this.repository.find({
       where: { role: Not(UserRole.ADMIN) },
     });
-    const selectedUsers = users.splice(startIndex, endIndex);
+    const selectedUsers = users.slice(startIndex, endIndex);
     const adminUserResponses = selectedUsers.map((user) => {
       const adminUserResponse = new AdminUserResponse(user);
       adminUserResponse.role = UserRole[user.role];

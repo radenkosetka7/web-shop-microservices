@@ -90,8 +90,13 @@ export class ApiGatewayService {
     return await lastValueFrom(this.userClient.send('blockUser', id));
   }
 
-  async uploadAvatarImage(file: Express.Multer.File): Promise<string | null> {
-    return await lastValueFrom(this.userClient.send('uploadAvatarImage', file));
+  async uploadAvatarImage(
+    file: Express.Multer.File,
+    uid: string,
+  ): Promise<string | null> {
+    return await lastValueFrom(
+      this.userClient.send('uploadAvatarImage', { file, uid }),
+    );
   }
 
   async readMessage(id: string): Promise<any> {

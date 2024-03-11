@@ -85,7 +85,7 @@ export class ProductsServiceService {
         .orderBy('p.creationDate', 'DESC')
         .getMany();
     }
-    const selectedProducts = products.splice(startIndex, endIndex);
+    const selectedProducts = products.slice(startIndex, endIndex);
     selectedProducts.forEach(async (product) => {
       let result: ProductResponse = {
         ...product,
@@ -124,7 +124,7 @@ export class ProductsServiceService {
         .leftJoinAndSelect('p.attributeValues', 'attributeValues')
         .getMany();
     }
-    const selectedProducts = products.splice(startIndex, endIndex);
+    const selectedProducts = products.slice(startIndex, endIndex);
     for (const product of selectedProducts) {
       let result: ProductResponse = {
         ...product,
@@ -168,7 +168,7 @@ export class ProductsServiceService {
         .leftJoinAndSelect('p.attributeValues', 'attributeValues')
         .getMany();
     }
-    const selectedProducts = products.splice(startIndex, endIndex);
+    const selectedProducts = products.slice(startIndex, endIndex);
     for (const product of selectedProducts) {
       let result: ProductResponse = {
         ...product,
@@ -331,7 +331,7 @@ export class ProductsServiceService {
       .leftJoinAndSelect('product.attributeValues', 'attributeValues')
       .getMany();
 
-    const selectedProducts = products.splice(startIndex, endIndex);
+    const selectedProducts = products.slice(startIndex, endIndex);
     return { products: selectedProducts, total: products.length };
   }
 

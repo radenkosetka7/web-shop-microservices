@@ -22,11 +22,11 @@ const ActivateAccount = () => {
             username: user
         };
         const response = await activateAccount(accData);
-        if (response.data === "") {
+        if (response.data.data === null) {
             setResponseText("Invalid code. Please try again.");
             return;
         }
-        sessionStorage.setItem('access', response.data.token);
+        sessionStorage.setItem('access', response.data.data.access_token);
         nav('/');
     }
 

@@ -31,21 +31,6 @@ const Login = () => {
           setStatusCode(response.error.message);
           return;
         }
-        // if(response.error)
-        // {
-        //     if(response.error.message === "200")
-        //     {
-        //         setStatusCode(response.error.message);
-        //         setTimeout(() => {
-        //             navigate("/activateAccount", {state: {username: loginData.username}});
-        //         }, 2000);
-        //         return;
-        //     }
-        //     else {
-        //         setStatusCode(response.error.message);
-        //         return;
-        //     }
-        // }
         dispatch(getLoggedUser({}));
         nav('/');
     }

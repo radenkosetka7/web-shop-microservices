@@ -30,7 +30,7 @@ export class EmailsServiceService {
       await this.mailerService.sendMail({
         to: email,
         subject: '"WebShop - Verification"',
-        text: 'Welcome to WebShopIP application \n\nACTIVATION CODE: ' + code,
+        text: 'Welcome to WebShop application \n\nACTIVATION CODE: ' + code,
       });
       return 'E-mail is successfully sent.';
     } catch (error) {

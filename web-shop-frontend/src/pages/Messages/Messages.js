@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Layout, Space, Table } from "antd";
+import { Button, Layout, Space, Table, Tooltip } from "antd";
 import './Messages.css';
 import { useDispatch, useSelector } from "react-redux";
 import { getMessages, readMessage } from "../../redux-store/messageSlice";
 import SearchComponent from "../../components/Search/Search";
 import ReplyMessageModal from "../CustomerSupport/ReplyMessageModal";
+import { FaCircle } from "react-icons/fa";
 
 const {Footer} = Layout;
 
@@ -37,9 +38,13 @@ const Messages = () => {
   {
     if(check)
     {
-      return "READ"
+      return <Tooltip placement={"top"} title={"Read"}>
+        <FaCircle color="green" size="1em"/>
+      </Tooltip>;
     }
-    return "UNREAD"
+    return <Tooltip placement={"top"} title={"Unread"}>
+      <FaCircle color="blue" size="1em"/>
+    </Tooltip>;
   }
 
   function SetMail(user)

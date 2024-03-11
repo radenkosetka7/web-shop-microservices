@@ -219,8 +219,9 @@ export class ApiGatewayController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadAvatarImage(
     @UploadedFile() file: Express.Multer.File,
+    @Query('uid') uid: string,
   ): Promise<string | null> {
-    return await this.apiGatewayService.uploadAvatarImage(file);
+    return await this.apiGatewayService.uploadAvatarImage(file, uid);
   }
 
   @Put('messages/:id')
@@ -510,8 +511,6 @@ export class ApiGatewayController {
   }
 
   @Get('categories')
-  @Roles(UserRole.ORDINARY, UserRole.ADMIN)
-  @UseGuards(AuthGuard, RolesGuard)
   async getCategories(): Promise<Category[]> {
     return await this.apiGatewayService.getCategories();
   }

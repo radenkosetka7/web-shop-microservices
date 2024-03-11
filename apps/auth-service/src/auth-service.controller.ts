@@ -72,14 +72,15 @@ export class AuthServiceController {
   }
 
   @MessagePattern('uploadAvatarImage')
-  async uploadAvatarImage(file: Express.Multer.File): Promise<string | null> {
+  async uploadAvatarImage(data: any): Promise<string | null> {
     try {
+      const { file, uid } = data;
       const dir = process.env.DIR;
-      const imageName = uuidv4() + '_' + file.originalname;
-      const imagePath = path.join(dir, imageName);
+      const extension = '.png';
+      const imagePath = path.join(dir, uid + extension);
       const bufferData = Buffer.from(file.buffer);
       fs.writeFileSync(imagePath, bufferData);
-      return imageName;
+      return uid;
     } catch (error) {
       return null;
     }

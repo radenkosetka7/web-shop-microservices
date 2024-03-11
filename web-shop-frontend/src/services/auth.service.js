@@ -24,13 +24,16 @@ export const activateAccount = (activateAccountData) => {
         .then((results) => results);
 }
 
-export const uploadImage = (imageData) => {
-    const file = imageData.get("file");
-    return instance
-        .post(gateway+'uploadAvatar', {file}, {
+export const uploadImage = (file,uid) => {
+  return instance
+        .post(gateway+'uploadAvatar', file, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
+          params: {
+              uid:uid
+          }
+
         })
         .then((results) => results);
 }

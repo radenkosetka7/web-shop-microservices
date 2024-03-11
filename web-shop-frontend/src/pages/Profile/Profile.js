@@ -138,7 +138,7 @@ const Profile = () => {
                         <div className='leftSide'>
                             <div className='userImageContainer'>
                                 <img className='userImage'
-                                     src={user.avatar !== null ? require("../../assets/users/" + user.avatar) : require("../../assets/user_318-159711.avif")}
+                                     src={user.avatar !== null ? require("../../assets/users/" + user.avatar+".png") : require("../../assets/user_318-159711.avif")}
                                      alt="User"/>
                             </div>
                             <p className='name'>{user.username}</p>
