@@ -114,7 +114,7 @@ const AddProduct = ({show,onClose}) => {
             ]} open={show} onCancel={onClose} >
                 <Steps onChange={setCurrentPage} current={currentPage}>
                     <Steps.Step disabled={isStepDisabled(0)} title='General' ></Steps.Step>
-                    <Steps.Step disabled={isStepDisabled(1)} title='Images'></Steps.Step>
+                    <Steps.Step disabled={isStepDisabled(1)}  title='Images'></Steps.Step>
                     <Steps.Step disabled={isStepDisabled(2)} title='Category'></Steps.Step>
                     <Steps.Step disabled={isStepDisabled(3)} title='Attributes'></Steps.Step>
                     <Steps.Step disabled={isStepDisabled(4)} title='Finished'></Steps.Step>

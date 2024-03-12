@@ -41,7 +41,7 @@ const ImagesForm = ({ onFinish }) => {
       </Upload>
       <Form.Item>
         <Form.Item wrapperCol={{ offset: 18, span: 14 }}>
-          <Button disabled={selectedImages.length<1} type="primary" htmlType="submit">
+          <Button disabled={!selectedImages} type="primary" htmlType="submit">
             Continue
           </Button>
         </Form.Item>

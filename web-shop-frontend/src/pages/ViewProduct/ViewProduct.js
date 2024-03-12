@@ -125,7 +125,7 @@ const ViewProduct = () => {
                                         <List.Item key={index}>
                                             <List.Item.Meta
                                                 avatar={<Avatar
-                                                    src={comment.user.avatar !== null ? require("../../assets/users/" + comment.user.avatar) : require("../../assets/user_318-159711.avif")}
+                                                    src={comment.user.avatar !== null ? require("../../assets/users/" + comment.user.avatar + ".png") : require("../../assets/user_318-159711.avif")}
                                                     alt="Image"/>}
                                                 title={<p
                                                     strong>{comment.user.username}</p>}
@@ -185,7 +185,7 @@ const ViewProduct = () => {
                                     <br/>
                                     <SimpleImageSlider
                                         images={selectedProduct.images.map((image)=>({
-                                            url: require('../../assets/products/' + image.productImage)
+                                            url: require('../../assets/products/' + image.productImage + ".png")
                                         }))}
                                         showNavs={true}
                                         showBullets
