@@ -67,7 +67,11 @@ export const getAllProductsForSeller = (page,size,finished) => {
 export const uploadImages = (imageData) => {
 
     return authInstance
-        .post(gateway+ 'products/uploadImages', imageData)
+        .post(gateway+ 'products/uploadImages', imageData,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
         .then((results) => results);
 }
 

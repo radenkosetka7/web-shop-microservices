@@ -393,9 +393,10 @@ export class ApiGatewayController {
   @Post('products/uploadImages')
   @UseInterceptors(FileFieldsInterceptor([{ name: 'files', maxCount: 10 }]))
   async uploadProductImages(
+    @Body('uids') uids: string[],
     @UploadedFiles() files: { files: Express.Multer.File[] },
   ): Promise<string[] | null> {
-    return await this.apiGatewayService.uploadProductImages(files);
+    return await this.apiGatewayService.uploadProductImages(files.files, uids);
   }
 
   @Roles(UserRole.ORDINARY)

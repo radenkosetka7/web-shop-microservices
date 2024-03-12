@@ -54,7 +54,8 @@ const AddProduct = ({show,onClose}) => {
             formData.append("files",  image.originFileObj);
             formData.append(`uids[${index}]`, image.uid);
         });
-        uploadImages(imageDetails);
+
+        uploadImages(formData);
         setTimeout(() => {
             setIsDisabled(false);
             onClose();

@@ -65,20 +65,22 @@ export class ProductsServiceController {
   }
 
   @MessagePattern('uploadProductImages')
-  async uploadProductImages(files: {
-    files: Express.Multer.File[];
-  }): Promise<string[] | null> {
+  async uploadProductImages(data: any): Promise<string[] | null> {
     try {
-      const fileNames: string[] = [];
+      const files = data.files;
+      const uids = data.uids;
+      const extension = '.png';
       const dir = process.env.DIR;
-      for (const file of files.files) {
-        const imageName = uuidv4() + '_' + file.filename;
-        const imagePath = path.join(dir, imageName);
-        fs.writeFileSync(imagePath, file.buffer);
-        fileNames.push(imageName);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const uid = uids[i];
+        const imagePath = path.join(dir, uid + extension);
+        const bufferData = Buffer.from(file.buffer);
+        fs.writeFileSync(imagePath, bufferData);
       }
-      return fileNames;
+      return uids;
     } catch (error) {
+      console.log(error);
       return null;
     }
   }

@@ -184,11 +184,12 @@ export class ApiGatewayService {
     );
   }
 
-  async uploadProductImages(files: {
-    files: Express.Multer.File[];
-  }): Promise<string[] | null> {
+  async uploadProductImages(
+    files: Express.Multer.File[],
+    uids: string[],
+  ): Promise<string[] | null> {
     return await lastValueFrom(
-      this.productClient.send('uploadProductImages', files),
+      this.productClient.send('uploadProductImages', { files, uids }),
     );
   }
 
