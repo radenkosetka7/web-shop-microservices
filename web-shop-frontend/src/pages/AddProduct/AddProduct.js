@@ -15,7 +15,6 @@ const AddProduct = ({show,onClose}) => {
     };
 
     const [isDisabled, setIsDisabled] = useState(false);
-    const [statusCode, setStatusCode] = useState(null);
 
     const[currentPage,setCurrentPage] = useState(0);
     const[generalDetails,setGeneralDetails]=useState(null);
@@ -27,14 +26,13 @@ const AddProduct = ({show,onClose}) => {
     const handleFormSubmit = async (values) => {
         setIsDisabled(true)
 
-         const responseImages = await uploadImages(imageDetails);
-        const imagesRequests = responseImages.data.map(imageName => {
-            return { productImage: imageName };
+        const imagesRequests = imageDetails.map(detail => {
+            return { productImage: detail.uid };
         });
 
         const resultAttributes = Object.entries(attributeDetails).map(([attributId, value]) => ({
             value: value,
-            attributeId: parseInt(attributId)
+            attributeId: attributId
         }));
 
 
@@ -42,15 +40,21 @@ const AddProduct = ({show,onClose}) => {
             title: generalDetails.name,
             description: generalDetails.description,
             price: generalDetails.price,
-            productStatus: generalDetails.condition === true ? 0 : 1,
+            isNew: generalDetails.condition === true,
             city: generalDetails.city,
             contact: generalDetails.contact,
-            categoryId: categoryDetails.category,
+            category: categoryDetails.category,
             images: imagesRequests,
             attributeValues: resultAttributes
         };
 
         dispatch(createProduct({value:productRequest}));
+        let formData = new FormData();
+        imageDetails.forEach((image, index) => {
+            formData.append("files",  image.originFileObj);
+            formData.append(`uids[${index}]`, image.uid);
+        });
+        uploadImages(imageDetails);
         setTimeout(() => {
             setIsDisabled(false);
             onClose();
@@ -106,7 +110,7 @@ const AddProduct = ({show,onClose}) => {
     return (
         <>
             <Modal width="50%"  maskClosable={false} title={<div style={{ textAlign: 'center', fontSize: '20px' }}>Add new product</div>} footer={[
-            ]} open={show} onCancel={onClose}  bodyStyle={{ maxHeight: '410px', overflowY: 'auto', width:"100%"  }}>
+            ]} open={show} onCancel={onClose} >
                 <Steps onChange={setCurrentPage} current={currentPage}>
                     <Steps.Step disabled={isStepDisabled(0)} title='General' ></Steps.Step>
                     <Steps.Step disabled={isStepDisabled(1)} title='Images'></Steps.Step>

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {Button, Form, Input, InputNumber} from "antd";
-import {getCategory} from "../../redux-store/categorySlice";
+import { getCategory, getCategoryAttributes } from "../../redux-store/categorySlice";
 import {useDispatch, useSelector} from "react-redux";
 
 const AttributeForm = ({ onFinish, categoryId, initialValues }) => {
     const [statusCode, setStatusCode] = useState(null);
     const dispatch = useDispatch();
 
-    const {selectedCategory} = useSelector((state) => state.categories);
+    const {attributes} = useSelector((state) => state.categories);
     useEffect(() => {
         if(categoryId !== null) {
-            dispatch(getCategory({value: categoryId}));
+            dispatch(getCategoryAttributes({value: categoryId}));
         }
     }, [categoryId]);
 
@@ -25,7 +25,7 @@ const AttributeForm = ({ onFinish, categoryId, initialValues }) => {
             onClick={(event) => event.stopPropagation()}
         >
             <br/>
-            {selectedCategory !== null && selectedCategory.attributes.map((attribute) => (
+            {attributes !== null && attributes.map((attribute) => (
                     <Form.Item
                         label={`${attribute.name}`}
                         name={`${attribute.id}`}

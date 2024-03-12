@@ -22,9 +22,9 @@ export const createCategory = (categoryData) => {
         .then((results) => results.data);
 };
 
-export const getCategoryAttributes = (idCategory) => {
+export const getCategoryAttributes = (id) => {
     return authInstance
-        .get(gateway+`categories/${idCategory}/attributes`)
+        .get(gateway+`categories/${id}/attributes`)
         .then((results) => results.data);
 };
 

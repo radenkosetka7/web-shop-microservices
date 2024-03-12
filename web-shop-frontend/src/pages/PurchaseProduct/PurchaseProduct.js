@@ -14,7 +14,7 @@ const PurchaseProduct = ({show, onClose,onFinish}) => {
     };
     return (
         <Modal maskClosable={false} title={<div style={{textAlign: 'center', fontSize: '20px'}}>Buy product</div>}
-               footer={[]} open={show} onCancel={onClose} bodyStyle={{maxHeight: '440px', marginLeft:'10%', overflowY: 'auto'}}>
+               footer={[]} open={show} onCancel={onClose}>
             <br/>
             <Card style={{ display: 'flex', alignItems: 'center', width: 'fit-content', backgroundColor: 'transparent', borderColor:'black', marginRight: '10%' }}>
                 <img

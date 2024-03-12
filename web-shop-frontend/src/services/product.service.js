@@ -66,13 +66,8 @@ export const getAllProductsForSeller = (page,size,finished) => {
 
 export const uploadImages = (imageData) => {
 
-    const formData = new FormData();
-    imageData.forEach(file => {
-        formData.append("files", file);
-    });
-
     return authInstance
-        .post(gateway+ 'products/uploadImages', formData)
+        .post(gateway+ 'products/uploadImages', imageData)
         .then((results) => results);
 }
 

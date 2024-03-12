@@ -50,6 +50,7 @@ export class ProductsServiceService {
       };
       this.attributeValuesRepository.save(attributeValueRequest);
     }
+
     let result: ProductResponse = {
       ...productSaved,
       comments: [],
@@ -86,14 +87,14 @@ export class ProductsServiceService {
         .getMany();
     }
     const selectedProducts = products.slice(startIndex, endIndex);
-    selectedProducts.forEach(async (product) => {
+    selectedProducts.forEach((product) => {
       let result: ProductResponse = {
         ...product,
         comments: [],
       };
       resultDTO.push(result);
     });
-    return { products: resultDTO, total: products };
+    return { products: resultDTO, total: products.length };
   }
 
   async getAllProductsForBuyer(

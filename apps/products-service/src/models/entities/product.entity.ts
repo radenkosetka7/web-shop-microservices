@@ -28,14 +28,8 @@ export class Product {
   userBuyer: string;
   @Column({ type: 'uuid' })
   category: string;
-  @OneToMany(() => Image, (image) => image.product, {
-    cascade: true,
-    eager: true,
-  })
+  @OneToMany(() => Image, (image) => image.product)
   images: Image[];
-  @OneToMany(() => AttributeValue, (attributeValue) => attributeValue.product, {
-    cascade: true,
-    eager: true,
-  })
+  @OneToMany(() => AttributeValue, (attributeValue) => attributeValue.product)
   attributeValues: AttributeValue[];
 }
