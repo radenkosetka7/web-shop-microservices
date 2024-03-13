@@ -30,11 +30,7 @@ const ViewProduct = () => {
         new Date(date).toLocaleDateString('en-US', {
             month: "2-digit",
             day: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true,
+            year: "numeric"
         });
 
 
@@ -208,7 +204,7 @@ const ViewProduct = () => {
                                            readOnly style={{width:'fit-content',marginRight:'10px',marginBottom:'10px'}} />
                                     <Input value={`Contact: ${selectedProduct.contact}`}
                                            readOnly style={{width:'fit-content',marginRight:'10px',marginBottom:'10px'}} />
-                                    <Input value={`Release date : ${formattedDate(selectedProduct.creationDate)}}`}
+                                    <Input value={`Release date : ${formattedDate(selectedProduct.creationDate)}`}
                                            readOnly style={{width:'250px',marginRight:'10px',marginBottom:'10px'}} />
                                     {selectedProduct.attributeValues.map((attribute, index) => (
                                         <Input

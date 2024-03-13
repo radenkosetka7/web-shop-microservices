@@ -181,10 +181,14 @@ export class ProductsServiceService {
   }
 
   async getById(id: string): Promise<any> {
-    const product = await this.productsRepository.findOne({
-      where: { id: id },
-    });
-
+    const product = await this.productsRepository
+      .createQueryBuilder('p')
+      .where('p.id = :id', {
+        id,
+      })
+      .leftJoinAndSelect('p.images', 'images')
+      .leftJoinAndSelect('p.attributeValues', 'attributeValues')
+      .getOne();
     if (!product) {
       return { statusCode: 404, message: 'Product does not exist.' };
     }
@@ -196,7 +200,6 @@ export class ProductsServiceService {
       this.categoryClient.send('getCategoryById', product.category),
     );
     let attributeValuesResponses: AttributeValueResponse[] = [];
-
     await Promise.all(
       product.attributeValues.map(async (attributeValue) => {
         const attribute = await lastValueFrom(
