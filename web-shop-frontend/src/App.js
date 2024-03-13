@@ -54,7 +54,9 @@ function App() {
               <Route path="/register" element={<Register/>} exact/>
               <Route path="/activateAccount" element={<ActivateAccount/>} exact/>
               <Route path="/:id" element={<ViewProduct/>}/>
+              <Route element={<PrivateRoutes/>}>
               <Route path="/messages" element={<Messages />} />
+              </Route>
               <Route path="*" element={<NotFound/>}/>
           </Routes>
       </BrowserRouter>

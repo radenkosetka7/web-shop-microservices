@@ -132,7 +132,7 @@ const ViewProduct = () => {
                                                     </p>
                                                 </div>
                                             )}
-                                            {loggedUser && comment.answer === null && selectedProduct.userSeller.id === loggedUser.id &&
+                                            {loggedUser && comment.answer === null && selectedProduct.userSeller === loggedUser.id &&
                                                 (<div className='buttonStyle'>
                                                         <TextArea maxLength={255} style={{width:'98%'}}
                                                                   onChange={(e) => setReplyText(e.target.value)}
@@ -150,7 +150,7 @@ const ViewProduct = () => {
                             <hr style={{borderBottom:"2px solid white"}}/>
                         </div>)}
                         <br/>
-                        {authenticated && selectedProduct && selectedProduct.finished === 0 && loggedUser.id !== selectedProduct.userSeller.id &&
+                        {authenticated && loggedUser.role ===2 && selectedProduct && selectedProduct.finished === 0 && loggedUser.id !== selectedProduct.userSeller &&
                             (
                                 <div>
                                 <h1>Ask question</h1>
@@ -170,7 +170,7 @@ const ViewProduct = () => {
                                 <Card style={{width:'fit-content%',backgroundColor:'transparent', marginRight:'10%'}}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <h2>{selectedProduct.title}</h2>
-                                        {authenticated && selectedProduct.finished === 0 && selectedProduct.userSeller.id !== loggedUser.id && <Button onClick={handleBuyModalOpen} type={"primary"}>Buy product</Button> }
+                                        {authenticated && loggedUser.role ===2 && selectedProduct.finished === 0 && selectedProduct.userSeller !== loggedUser.id && <Button onClick={handleBuyModalOpen} type={"primary"}>Buy product</Button> }
                                     </div>
                                     <p className='pView'>{selectedProduct.price} BAM</p>
                                     <p>{selectedProduct.category.name}</p>

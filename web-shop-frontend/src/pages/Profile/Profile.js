@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {FaBox, FaEdit, FaMoneyCheck, FaShoppingCart} from "react-icons/fa";
 import {Button, Layout, Pagination} from "antd";
 import jwtDecode from "jwt-decode";
-import {getUser} from "../../redux-store/userSlice";
+import { getLoggedUser, getUser } from "../../redux-store/userSlice";
 import EditProfile from "../EditProfile/EditProfile";
 import ChangePassword from "../../components/ChangePassword/ChangePassword";
 import {getAllProductsForSeller, getAllProductsForBuyer, removeProduct} from "../../redux-store/productSlice";
@@ -17,7 +17,7 @@ const Profile = () => {
     const [profileModal, setProfileModal] = useState(false);
     const [size, setSize] = useState(10);
     const [current, setCurrent] = useState(1);
-    const [page, setPage] = useState(current - 1);
+    const [page, setPage] = useState(current);
     const {loggedUser} = useSelector((state) => state.users);
     const [passwordModal, setPasswordModal] = useState(false);
     const dispatch = useDispatch();
@@ -30,15 +30,13 @@ const Profile = () => {
     const {products,selectedProduct} = useSelector((state) => state.products);
 
 
-    useEffect(() => {
-        const token = sessionStorage.getItem('access');
-        if (token !== null) {
-            const decodedToken = jwtDecode(token);
-            const id = parseInt(decodedToken.jti);
-            dispatch(getUser({id: id}));
-
-        }
-    }, []);
+    // useEffect(() => {
+    //     const token = sessionStorage.getItem('access');
+    //     if (token !== null) {
+    //         dispatch(getLoggedUser({}));
+    //
+    //     }
+    // }, []);
 
     const onShowSizeChange = (current, pageSize) => {
         setSize(pageSize);
@@ -177,8 +175,8 @@ const Profile = () => {
                 <Layout>
                     <Content className='contentStyle'>
                         <div className='contentDiv'>
-                            {products && products.length !== 0 ? (
-                                    products.content.map(product => (
+                            {products && products.products.length !== 0 ? (
+                                    products.products.map(product => (
                                         <div className='productCard'>
                                         <CardComponent key={product.id} product={product} handleChangeRefreshKey={handleChangeRefreshKey}/>
                                         </div>
