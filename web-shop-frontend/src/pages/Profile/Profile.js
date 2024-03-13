@@ -18,7 +18,7 @@ const Profile = () => {
     const [size, setSize] = useState(10);
     const [current, setCurrent] = useState(1);
     const [page, setPage] = useState(current - 1);
-    const {user} = useSelector((state) => state.users);
+    const {loggedUser} = useSelector((state) => state.users);
     const [passwordModal, setPasswordModal] = useState(false);
     const dispatch = useDispatch();
     const [refreshKey, setRefreshKey] = useState(0);
@@ -134,14 +134,14 @@ const Profile = () => {
                 style={{backgroundColor: "#c5c5c5"}}
                 collapsedWidth="0">
                 <div className='left'>
-                    {user ? (
+                    {loggedUser ? (
                         <div className='leftSide'>
                             <div className='userImageContainer'>
                                 <img className='userImage'
-                                     src={user.avatar !== null ? require("../../assets/users/" + user.avatar+".png") : require("../../assets/user_318-159711.avif")}
+                                     src={loggedUser.avatar !== null ? require("../../assets/users/" + loggedUser.avatar+".png") : require("../../assets/user_318-159711.avif")}
                                      alt="User"/>
                             </div>
-                            <p className='name'>{user.username}</p>
+                            <p className='name'>{loggedUser.username}</p>
                             <Button type="primary" className='editButton' onClick={handleEditProfileOpen}>
                                 <FaEdit style={{marginRight: '5px'}}/>
                                 Edit Profile

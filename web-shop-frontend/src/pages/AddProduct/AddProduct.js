@@ -102,7 +102,7 @@ const AddProduct = ({show,onClose}) => {
     }
     const forms= [
         <GeneralForm onFinish={onFinishedGeneral} initialValues={generalDetails}/>,
-        <ImagesForm onFinish={onFinishedImage}/>,
+        <ImagesForm onFinish={onFinishedImage} images={imageDetails} setImages={setImageDetails}/>,
         <SelectCategory onFinish={onFinishedCatergory} initialValues={categoryDetails}/>,
         <AttributeForm onFinish={onFinishedAttribute} categoryId={categoryDetails!==null ? categoryDetails.category:0} initialValues={attributeDetails}/>,
         <Finished onFinish={handleFormSubmit} isDisabled={isDisabled}/>

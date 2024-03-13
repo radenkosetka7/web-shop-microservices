@@ -26,7 +26,7 @@ const PurchaseProduct = ({show, onClose,onFinish}) => {
 
                     <p><strong>Name: </strong>{selectedProduct.title}</p>
                     <p><strong>Price: </strong>{selectedProduct.price}KM</p>
-                    <p><strong>Product condition: </strong> {selectedProduct.productState ? 'Used' : 'New'}</p>
+                    <p><strong>Product condition: </strong> {selectedProduct.isNew ? 'Used' : 'New'}</p>
                 </div>
             </Card>
 

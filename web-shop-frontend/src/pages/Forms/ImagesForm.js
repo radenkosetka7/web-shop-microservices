@@ -3,16 +3,16 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Upload } from "antd";
 
 
-const ImagesForm = ({ onFinish }) => {
-  const [selectedImages, setSelectedImages] = useState([]);
+const ImagesForm = ({ onFinish, images,setImages }) => {
 
   const handleSubmit = (values) => {
-    onFinish({ ...values, images: selectedImages });
+    onFinish({ ...values, images: images });
   };
 
   const handleChange = ({fileList: newFileList}) => {
-    setSelectedImages(newFileList);
+    setImages(newFileList);
   };
+  console.log("images su " + images);
   return (
     <Form
       onFinish={handleSubmit}
@@ -28,7 +28,7 @@ const ImagesForm = ({ onFinish }) => {
         className="m-2 custom-upload"
         beforeUpload={() => false}
         listType="picture-card"
-        fileList={selectedImages}
+        fileList={images}
         onChange={handleChange}
         maxCount={10}
       >
@@ -41,7 +41,7 @@ const ImagesForm = ({ onFinish }) => {
       </Upload>
       <Form.Item>
         <Form.Item wrapperCol={{ offset: 18, span: 14 }}>
-          <Button disabled={!selectedImages} type="primary" htmlType="submit">
+          <Button disabled={!images} type="primary" htmlType="submit">
             Continue
           </Button>
         </Form.Item>

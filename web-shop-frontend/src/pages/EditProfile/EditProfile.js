@@ -10,7 +10,7 @@ const EditProfile = ({show,onClose}) => {
 
     const [isDisabled, setIsDisabled] = useState(false);
     const dispatch= useDispatch();
-    const {user} = useSelector((state)=>state.users);
+    const {loggedUser} = useSelector((state)=>state.users);
     const [selectedFile, setSelectedFile] = useState('');
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -19,8 +19,8 @@ const EditProfile = ({show,onClose}) => {
     const handleFormSubmit = async (values) => {
         setIsDisabled(true)
 
-        if (user.name !== values.name || user.surname !== values.surname || user.mail !== values.mail ||
-            user.city !== values.city || selectedFile) {
+        if (loggedUser.firstname !== values.firstname || loggedUser.lastname !== values.lastname || loggedUser.email !== values.email ||
+          loggedUser.city !== values.city || selectedFile) {
 
             let responseImage = null;
             if (selectedFile) {
@@ -31,13 +31,13 @@ const EditProfile = ({show,onClose}) => {
             }
             await new Promise(resolve => setTimeout(resolve, 1500));
             const uploadData = {
-                name:values.name,
-                surname:values.surname,
+                firstname:values.firstname,
+                lastname:values.lastname,
                 city: values.city,
-                avatar: responseImage ? responseImage : user.avatar,
-                mail:values.mail
+                avatar: responseImage ? responseImage : loggedUser.avatar,
+                email:values.email
             };
-            await dispatch(updateUser({id:user.id,value:uploadData}));
+            await dispatch(updateUser({id:loggedUser.id,value:uploadData}));
             setTimeout(() => {
                 setIsDisabled(false);
                 onClose();
@@ -49,7 +49,7 @@ const EditProfile = ({show,onClose}) => {
     return (
         <>
             <Modal maskClosable={false} title={<div style={{ textAlign: 'center', fontSize: '20px' }}>Edit profile</div>} footer={[
-            ]} open={show} onCancel={onClose}  bodyStyle={{ height: '50%', overflowY: 'auto' }}>
+            ]} open={show} onCancel={onClose} >
                 <br/>
                 <Form
                     labelCol={{ span: 8 }}
@@ -59,21 +59,21 @@ const EditProfile = ({show,onClose}) => {
                     style={{ maxWidth: 600 }}
                     onClick={event => event.stopPropagation()}
                     initialValues={{
-                        name: user.name,
-                        surname: user.surname,
-                        mail: user.mail,
-                        username:user.username,
-                        city: user.city,
+                        firstname: loggedUser.firstname,
+                        lastname: loggedUser.lastname,
+                        email: loggedUser.email,
+                        username:loggedUser.username,
+                        city: loggedUser.city,
                     }}
                 >
                     <Form.Item
-                        label="Name"
-                        name="name"
+                        label="Firstname"
+                        name="firstname"
 
                         rules={[
                             {
                                 required: true,
-                                message: 'Name' + isRequired,
+                                message: 'Firstname' + isRequired,
 
                             }
                         ]}
@@ -81,13 +81,13 @@ const EditProfile = ({show,onClose}) => {
                         <Input/>
                     </Form.Item>
                     <Form.Item
-                        label="Surname: "
-                        name="surname"
+                        label="Lastname: "
+                        name="lastname"
 
                         rules={[
                             {
                                 required: true,
-                                message: 'Surname' + isRequired,
+                                message: 'Lastname' + isRequired,
                             }
                         ]}
                     >
@@ -102,7 +102,7 @@ const EditProfile = ({show,onClose}) => {
                     </Form.Item>
                     <Form.Item
                         label="Email: "
-                        name="mail"
+                        name="email"
 
                         rules={[
                             {

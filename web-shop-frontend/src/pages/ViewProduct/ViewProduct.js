@@ -22,7 +22,7 @@ const ViewProduct = () => {
     const {id} = useParams();
     const [buyModal,setBuyModal] = useState(false);
     const [refreshKey, setRefreshKey] = useState(0);
-    const {authenticated,user} = useSelector((state)=>state.users);
+    const {authenticated,loggedUser} = useSelector((state)=>state.users);
     const [isDisabled, setIsDisabled] = useState(false);
     const [replyText, setReplyText] = useState('');
 
@@ -139,7 +139,7 @@ const ViewProduct = () => {
                                                     </p>
                                                 </div>
                                             )}
-                                            {user && comment.answer === null && selectedProduct.userSeller.id === user.id &&
+                                            {loggedUser && comment.answer === null && selectedProduct.userSeller.id === loggedUser.id &&
                                                 (<div className='buttonStyle'>
                                                         <TextArea maxLength={255} style={{width:'98%'}}
                                                                   onChange={(e) => setReplyText(e.target.value)}
@@ -157,7 +157,7 @@ const ViewProduct = () => {
                             <hr style={{borderBottom:"2px solid white"}}/>
                         </div>)}
                         <br/>
-                        {authenticated && selectedProduct && selectedProduct.finished === 0 && user.id !== selectedProduct.userSeller.id &&
+                        {authenticated && selectedProduct && selectedProduct.finished === 0 && loggedUser.id !== selectedProduct.userSeller.id &&
                             (
                                 <div>
                                 <h1>Ask question</h1>
@@ -177,7 +177,7 @@ const ViewProduct = () => {
                                 <Card style={{width:'fit-content%',backgroundColor:'transparent', marginRight:'10%'}}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <h2>{selectedProduct.title}</h2>
-                                        {authenticated && selectedProduct.finished === 0 && selectedProduct.userSeller.id !== user.id && <Button onClick={handleBuyModalOpen} type={"primary"}>Buy product</Button> }
+                                        {authenticated && selectedProduct.finished === 0 && selectedProduct.userSeller.id !== loggedUser.id && <Button onClick={handleBuyModalOpen} type={"primary"}>Buy product</Button> }
                                     </div>
                                     <p className='pView'>{selectedProduct.price} BAM</p>
                                     <p>{selectedProduct.category.name}</p>
