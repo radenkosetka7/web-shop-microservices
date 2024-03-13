@@ -8,7 +8,7 @@ import {answerComment, createComment} from "../../redux-store/commentSlice";
 import './ViewProduct.css'
 import PurchaseProduct from "../PurchaseProduct/PurchaseProduct";
 import jwtDecode from "jwt-decode";
-import {getUser} from "../../redux-store/userSlice";
+import { getLoggedUser, getUser } from "../../redux-store/userSlice";
 const {Sider, Content} = Layout;
 const { TextArea } = Input;
 
@@ -92,13 +92,10 @@ const ViewProduct = () => {
     {
         const token = sessionStorage.getItem('access');
         if (token !== null) {
-            const decodedToken = jwtDecode(token);
-            const id = parseInt(decodedToken.jti);
-            dispatch(getUser({id: id}));
+            dispatch(getLoggedUser({}));
 
         }
-        const value=parseInt(id);
-        dispatch(getProduct({value:value}));
+        dispatch(getProduct({value:id}));
     },[refreshKey]);
 
     return (

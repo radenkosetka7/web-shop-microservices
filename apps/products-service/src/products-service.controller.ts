@@ -80,7 +80,6 @@ export class ProductsServiceController {
       }
       return uids;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }

@@ -18,7 +18,7 @@ const Home = () => {
     const [title, setTitle] = useState("");
     const {products,selectedProduct} = useSelector((state) => state.products);
     const [size, setSize] = useState(10);
-    const [page, setPage] = useState(current - 1);
+    const [page, setPage] = useState(1);
     const {categories, selectedCategory} = useSelector((state) => state.categories);
     const [removeCategoryFlag, setRemoveCategoryFlag] = useState(0);
     const [selectedValue, setSelectedValue] = useState(null);

@@ -12,7 +12,6 @@ const ImagesForm = ({ onFinish, images,setImages }) => {
   const handleChange = ({fileList: newFileList}) => {
     setImages(newFileList);
   };
-  console.log("images su " + images);
   return (
     <Form
       onFinish={handleSubmit}

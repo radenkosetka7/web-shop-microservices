@@ -12,7 +12,7 @@ const CardComponent = ({product, handleChangeRefreshKey}) => {
     const dispatch=useDispatch();
     const urlParam=`${product.id}`;
 
-    const {user} = useSelector((state)=>state.users);
+    const {loggedUser} = useSelector((state)=>state.users);
 
     const handleDeleteClick = async (e) => {
         e.preventDefault();
@@ -32,7 +32,7 @@ const CardComponent = ({product, handleChangeRefreshKey}) => {
         >
             <Meta className='price' title={product.title} description={`${product.price} BAM`}/>
            <br/>
-           {user && product && product.userSeller.id === user.id && <Button type='primary' onClick={handleDeleteClick} style={{backgroundColor:'red', width:'fit-content'}}><DeleteOutlined /> Delete</Button>}
+           {loggedUser && product && product.userSeller === loggedUser.id && <Button type='primary' onClick={handleDeleteClick} style={{backgroundColor:'red', width:'fit-content'}}><DeleteOutlined /> Delete</Button>}
        </Card>
         </Link>
     );
