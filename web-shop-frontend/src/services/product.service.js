@@ -77,7 +77,7 @@ export const uploadImages = (imageData) => {
 
 export const purchaseProduct = (idProduct) => {
     return authInstance
-        .put(gateway+`products/${idProduct}`)
+        .put(gateway+`products/purchase/${idProduct}`)
         .then((results) => results.data);
 };
 

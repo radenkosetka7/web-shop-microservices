@@ -1,50 +1,72 @@
-import {Button, Form, Input, Modal} from "antd";
-import React, {useState} from "react";
+import { Button, Form, Input, Modal, Upload } from "antd";
+import React, { useEffect, useState } from "react";
 import {invalidEmail, isRequired} from "../../constant/constants";
-import {updateUser} from "../../redux-store/userSlice";
+import { getLoggedUser, updateUser } from "../../redux-store/userSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {uploadImage} from "../../services/auth.service";
-
+import { PlusOutlined } from "@ant-design/icons";
 
 const EditProfile = ({show,onClose}) => {
 
     const [isDisabled, setIsDisabled] = useState(false);
     const dispatch= useDispatch();
     const {loggedUser} = useSelector((state)=>state.users);
-    const [selectedFile, setSelectedFile] = useState('');
-    const changeHandler = (event) => {
-        setSelectedFile(event.target.files[0]);
+    const [avatar, setAvatar] = useState('');
+    const [images,setImages]=useState([]);
+
+    const handleChangeImage = ({fileList: newFileList}) => {
+        setImages(newFileList);
+        setAvatar(newFileList[0]);
     };
+
 
     const handleFormSubmit = async (values) => {
         setIsDisabled(true)
 
         if (loggedUser.firstname !== values.firstname || loggedUser.lastname !== values.lastname || loggedUser.email !== values.email ||
-          loggedUser.city !== values.city || selectedFile) {
+          loggedUser.city !== values.city || avatar) {
 
-            let responseImage = null;
-            if (selectedFile) {
-                const formData = new FormData();
-                formData.append("file", selectedFile);
-                const upload = await uploadImage(formData);
-                responseImage = upload.data.data;
+            let formData;
+            let uid;
+            if(avatar)
+            {
+                formData  = new FormData();
+                formData.append("file",avatar.originFileObj)
+                uid = avatar.uid
             }
-            await new Promise(resolve => setTimeout(resolve, 1500));
             const uploadData = {
                 firstname:values.firstname,
                 lastname:values.lastname,
                 city: values.city,
-                avatar: responseImage ? responseImage : loggedUser.avatar,
+                avatar: avatar ? uid : loggedUser.avatar,
                 email:values.email
             };
             await dispatch(updateUser({id:loggedUser.id,value:uploadData}));
+            if(avatar)
+            {
+                uploadImage(formData,uid);
+            }
             setTimeout(() => {
                 setIsDisabled(false);
                 onClose();
             }, 1000);
+            dispatch(getLoggedUser({}));
         }
 
     };
+
+    useEffect(() => {
+        const img = new URL(`../../assets/users/${loggedUser.avatar}.png`, import.meta.url).href
+        console.log('sta je avatar ' + img);
+        setImages([
+            {
+                uid:'-1',
+                name:'image.png',
+                status:'done',
+                url: img
+            }
+        ])
+    }, [loggedUser]);
 
     return (
         <>
@@ -131,14 +153,26 @@ const EditProfile = ({show,onClose}) => {
                         <Input/>
                     </Form.Item>
                     <Form.Item
-                        label="Avatar"
-                        name="avatar"
-                    ><input type="file" onChange={changeHandler} id="file" name="file"
-                            accept=".jpg, .jpeg, .png"/>
+                      label="Avatar"
+                      name="avatar"
+                    ><Upload name={"file"}
+                             accept=".png,.jpeg,.jpg"
+                             className="m-2 custom-upload"
+                             onChange={handleChangeImage}
+                             fileList={images}
+                             maxCount={1}
+                    >
+                        <button type="button">
+                            <PlusOutlined />
+                            <div>
+                                Upload
+                            </div>
+                        </button>
+                    </Upload>
                     </Form.Item>
                     <Form.Item wrapperCol={{ offset: 18, span: 14 }}>
                         <Button type="primary" htmlType="submit" disabled={isDisabled}>
-                            Submit
+                        Submit
                         </Button>
                     </Form.Item>
                 </Form>

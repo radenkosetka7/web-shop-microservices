@@ -23,27 +23,19 @@ const Profile = () => {
     const dispatch = useDispatch();
     const [refreshKey, setRefreshKey] = useState(0);
     const [contentHeight, setContentHeight] = useState('calc(100vh - 73px)');
-    const [activeProducts, setActiveProducts] = useState(false);
+    const [activeProducts, setActiveProducts] = useState(true);
     const [soldProducts, setSoldProducts] = useState(false);
     const [purchasedProducts, setPurchasedProducts] = useState(false);
 
     const {products,selectedProduct} = useSelector((state) => state.products);
 
 
-    // useEffect(() => {
-    //     const token = sessionStorage.getItem('access');
-    //     if (token !== null) {
-    //         dispatch(getLoggedUser({}));
-    //
-    //     }
-    // }, []);
-
     const onShowSizeChange = (current, pageSize) => {
         setSize(pageSize);
     };
     const handlePaginationChange = (newPage) => {
         setCurrent(newPage);
-        setPage(newPage - 1);
+        setPage(newPage);
     };
     const handleEditProfileOpen = () => {
         setProfileModal(true);
@@ -54,7 +46,7 @@ const Profile = () => {
         if(current>1)
         {
             setCurrent(1);
-            setPage(0);
+            setPage(1);
         }
         setActiveProducts(true);
         setSoldProducts(false);
@@ -65,7 +57,7 @@ const Profile = () => {
         if(current>1)
         {
             setCurrent(1);
-            setPage(0);
+            setPage(1);
         }
         setSoldProducts(true);
         setActiveProducts(false);
@@ -76,7 +68,7 @@ const Profile = () => {
         if(current>1)
         {
             setCurrent(1);
-            setPage(0);
+            setPage(1);
         }
         setPurchasedProducts(true);
         setActiveProducts(false);

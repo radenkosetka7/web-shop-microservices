@@ -29,14 +29,8 @@ const Register = () => {
   }, [authenticated, navigate, dispatch]);
 
   const handleChangeImage = ({fileList: newFileList}) => {
-    if (newFileList.length === 0) {
-      //formik.setFieldValue("avatar", "")
-    } else {
-      //formik.setFieldValue("avatar ", newFileList[0])
-    }
     setImages(newFileList);
     setAvatar(newFileList[0]);
-    //setAvatarValue(newFileList[0]);
   };
 
   const [statusCode, setStatusCode] = useState(null);

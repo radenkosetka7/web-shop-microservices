@@ -8,7 +8,7 @@ import CategoryList from "../../components/CategoryList/CategoryList";
 import {getLoggedUser} from "../../redux-store/userSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllProducts, searchProduct,removeProduct} from "../../redux-store/productSlice";
-import {getCategories, getCategory, removeCategory} from "../../redux-store/categorySlice";
+import { getCategories, getCategory, getCategoryAttributes, removeCategory } from "../../redux-store/categorySlice";
 
 const {Footer, Sider, Content} = Layout;
 const Home = () => {
@@ -17,9 +17,9 @@ const Home = () => {
     const [current, setCurrent] = useState(1);
     const [title, setTitle] = useState("");
     const {products,selectedProduct} = useSelector((state) => state.products);
-    const [size, setSize] = useState(10);
+    const [size, setSize] = useState(2);
     const [page, setPage] = useState(1);
-    const {categories, selectedCategory} = useSelector((state) => state.categories);
+    const {categories, selectedCategory,attributes} = useSelector((state) => state.categories);
     const [removeCategoryFlag, setRemoveCategoryFlag] = useState(0);
     const [selectedValue, setSelectedValue] = useState(null);
     const [location, setLocation] = useState(null);
@@ -51,7 +51,7 @@ const Home = () => {
     const onSearch = (value) => {
         setTitle(value);
         setCurrent(1);
-        setPage(0);
+        setPage(1);
     };
     const dispatch = useDispatch();
 
@@ -61,7 +61,6 @@ const Home = () => {
     const handleLocationChange = (event) => {
         setLocation(event.target.value);
     };
-
 
     const onShowSizeChange = (current, pageSize) => {
         setSize(pageSize);
@@ -76,7 +75,7 @@ const Home = () => {
     }, []);
     const handlePaginationChange = (newPage) => {
         setCurrent(newPage);
-        setPage(newPage - 1);
+        setPage(newPage);
     };
 
     const handleClearFilters = () => {
@@ -86,15 +85,15 @@ const Home = () => {
         setPriceTo(0);
         setAttributeValues({});
         setCurrent(1);
-        setPage(0);
+        setPage(1);
         setSearchAttrsClicked(false);
     };
 
     useEffect(() => {
         if (typeof selectedCategoryTemp === 'string') {
             setRemoveCategoryFlag(1);
-            const parsedNumber = parseInt(selectedCategoryTemp);
-            dispatch(getCategory({value: parsedNumber}));
+            dispatch(getCategory({value: selectedCategoryTemp}));
+            dispatch(getCategoryAttributes({value: selectedCategoryTemp}));
         } else if (removeCategoryFlag !== 0) {
             dispatch(removeCategory());
         }
@@ -103,16 +102,12 @@ const Home = () => {
 
     const attributeList = Object.values(attributeValues).map(attrData => {
         return {
-            attribute: {
-                id: attrData.id,
-                name: attrData.name,
-                type: attrData.type
-            },
+            attributeId: attrData.id,
             value: attrData.value
         };
     });
     let searchData = {
-        categoryName: selectedCategory && typeof selectedCategoryTemp === 'string' ? selectedCategory.name : null,
+        category: selectedCategory && typeof selectedCategoryTemp === 'string' ? selectedCategory.id : null,
         title: title === "" ? null : title,
         location: location !== null ? location : null,
         productStatus: selectedValue !== null ? (selectedValue === '1' ? true : false) : null,
@@ -138,7 +133,7 @@ const Home = () => {
             {
                 setSearchAttrsClicked(false);
                 setCurrent(1);
-                setPage(0);
+                setPage(1);
             }
         }
 
@@ -149,7 +144,7 @@ const Home = () => {
         handleChangeRefreshKey();
         setSearchAttrsClicked(true);
         setCurrent(1);
-        setPage(0);
+        setPage(1);
 
     }
 
@@ -205,7 +200,7 @@ const Home = () => {
                 {selectedCategoryTemp && (
                     <div><h3 style={{color: 'black'}}>Specific attributes</h3>
                         <hr/>
-                        {selectedCategory != null && selectedCategory.attributes.map((attribute) => (
+                        {selectedCategory != null && attributes.map((attribute) => (
                             <div key={attribute.id} style={{textAlign: 'left', marginLeft: '3%'}}>
                                 <label style={{color: 'black', fontSize: '16px'}}>{attribute.name}</label>
                                 <br/>
@@ -265,9 +260,9 @@ const Home = () => {
                     </div>
                 </Content>
                 <Footer style={{backgroundColor: "#1d8f8a"}} className='footerStyle'>
-                    {products && products.total && (
+                    {products.products && products.total && (
                         <Pagination
-                            showSizeChanger
+                            pageSize={2}
                             onShowSizeChange={onShowSizeChange}
                             onChange={handlePaginationChange}
                             current={current}

@@ -496,8 +496,6 @@ export class ApiGatewayController {
   }
 
   @Get('categories/:id/attributes')
-  @Roles(UserRole.ORDINARY, UserRole.ADMIN)
-  @UseGuards(AuthGuard, RolesGuard)
   async getAttributesByCategoryId(@Param('id') id: string): Promise<any> {
     const attributes =
       await this.apiGatewayService.getAttributesByCategoryId(id);
@@ -517,8 +515,6 @@ export class ApiGatewayController {
   }
 
   @Get('categories/:id')
-  @Roles(UserRole.ORDINARY, UserRole.ADMIN)
-  @UseGuards(AuthGuard, RolesGuard)
   async getCategoryById(@Param('id') id: string): Promise<any> {
     const category = await this.apiGatewayService.getCategoryById(id);
     if (category?.statusCode) {

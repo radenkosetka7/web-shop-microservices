@@ -288,7 +288,7 @@ export class ProductsServiceService {
     }
     if (request.category) {
       queryBuilder.andWhere('product.category = :category', {
-        location: request.category,
+        category: request.category,
       });
     }
     if (request.location) {
