@@ -12,8 +12,12 @@ import {useDispatch} from "react-redux";
 import jwtDecode from "jwt-decode";
 import Profile from "./pages/Profile/Profile";
 import ViewProduct from "./pages/ViewProduct/ViewProduct";
-import PrivateRoutes from "./util/PrivateRoutes";
 import Messages from "./pages/Messages/Messages";
+import Categories from "./pages/Admin/Categories";
+import User from "./services/user.service";
+import PrivateRoutesUser from "./util/PrivateRoutesUser";
+import PrivateRoutesSupport from "./util/PrivateRoutesSupport";
+import PrivateRoutesAdmin from "./util/PrivateRoutesAdmin";
 
 function App() {
 
@@ -46,17 +50,21 @@ function App() {
       <Navbar/>
           <Routes>
 
-              <Route element={<PrivateRoutes/>}>
+              <Route element={<PrivateRoutesUser/>}>
                   <Route path="/myProfile" element={<Profile/>} exact/>
+              </Route>
+              <Route element={<PrivateRoutesSupport/>}>
+                  <Route path="/messages" element={<Messages/>} exact />
+              </Route>
+              <Route element={<PrivateRoutesAdmin/>}>
+                  <Route path="/categories" element={<Categories/>} exact />
+                  <Route path="/users" element={<User/>} exact />
               </Route>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} exact/>
               <Route path="/register" element={<Register/>} exact/>
               <Route path="/activateAccount" element={<ActivateAccount/>} exact/>
               <Route path="/:id" element={<ViewProduct/>}/>
-              <Route element={<PrivateRoutes/>}>
-              <Route path="/messages" element={<Messages />} />
-              </Route>
               <Route path="*" element={<NotFound/>}/>
           </Routes>
       </BrowserRouter>

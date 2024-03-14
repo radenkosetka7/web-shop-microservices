@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Layout, Space, Table, Tooltip } from "antd";
-import './Messages.css';
 import { useDispatch, useSelector } from "react-redux";
 import { getMessages, readMessage } from "../../redux-store/messageSlice";
 import SearchComponent from "../../components/Search/Search";
@@ -113,7 +112,7 @@ const Messages = () => {
       }}>
       </Table>
       </div>
-      <Footer style={{backgroundColor: "#1d8f8a"}} className='footerStyleMess'>
+      <Footer style={{backgroundColor: "#1d8f8a"}}>
       </Footer>
       { replyModal && <ReplyMessageModal show={replyModal} record = {selectedRecord} onClose={handleCloseReplyModal}/> }
 
