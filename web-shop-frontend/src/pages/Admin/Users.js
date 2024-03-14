@@ -31,7 +31,6 @@ const Users = () => {
 
   function ReadStatus(check)
   {
-    console.log("sta je check " + check);
     if(check === "ACTIVE")
     {
       return <Tooltip placement={"top"} title={"Active"}>
@@ -47,6 +46,12 @@ const Users = () => {
     return <Tooltip placement={"top"} title={"Blocked"}>
       <FaCircle color="red" size="1em"/>
     </Tooltip>;
+  }
+
+  function ShowAvatar(avatar)
+  {
+    console.log("avatar " + avatar);
+    return <img width={50} src={ avatar != null ? require(`../../assets/users/`+avatar+'.png') : require('../../assets/user_318-159711.avif')} alt={require('../../assets/user_318-159711.avif')}/>
   }
 
 
@@ -80,6 +85,9 @@ const Users = () => {
       title: 'Avatar',
       dataIndex: 'avatar',
       key: 'avatar',
+      render:(cell)=> {
+        return ShowAvatar(cell)
+      }
     },
     {
       title: 'Role',
