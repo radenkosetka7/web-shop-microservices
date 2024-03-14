@@ -168,9 +168,12 @@ export class AuthServiceService implements OnModuleInit {
     let queryBuilder = this.repository.createQueryBuilder('u');
 
     if (name !== '') {
-      queryBuilder = queryBuilder.where('LOWER(u.name) LIKE LOWER(:name)', {
-        name: `%${name}%`,
-      });
+      queryBuilder = queryBuilder.where(
+        'LOWER(u.firstname) LIKE LOWER(:name)',
+        {
+          name: `%${name}%`,
+        },
+      );
     }
     queryBuilder.andWhere('u.role != :adminRole', {
       adminRole: UserRole.ADMIN,
