@@ -120,6 +120,7 @@ export class AuthServiceService implements OnModuleInit {
     user.password = hashedPassword;
     const response = await this.repository.save(user);
     this.sendActivationCode(response.username, user.email);
+    delete response.password;
     return response;
   }
 
@@ -181,6 +182,7 @@ export class AuthServiceService implements OnModuleInit {
     const [users, total] = await queryBuilder.getManyAndCount();
     const selectedUsers = users.slice(startIndex, endIndex);
     const adminUserResponses = selectedUsers.map((user) => {
+      delete user.password;
       const adminUserResponse = new AdminUserResponse(user);
       adminUserResponse.role = UserRole[user.role];
       adminUserResponse.status = UserStatus[user.status];

@@ -106,7 +106,6 @@ export class ApiGatewayController {
         httpStatus,
       );
     }
-    delete result.password;
     return result;
   }
 

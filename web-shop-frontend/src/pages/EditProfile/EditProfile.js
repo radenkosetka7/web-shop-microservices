@@ -56,7 +56,7 @@ const EditProfile = ({show,onClose}) => {
     };
 
     useEffect(() => {
-        const img = new URL(`../../assets/users/${loggedUser.avatar}.png`, import.meta.url).href
+        const img = require("../../assets/users/" + loggedUser.avatar + ".png")
         console.log('sta je avatar ' + img);
         setImages([
             {
