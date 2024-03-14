@@ -4,12 +4,13 @@ import {gateway} from "../constant/constants";
 const instance = base.service(true);
 
 
-export const getUsers = (page,size) => {
+export const getUsers = (page,size,name) => {
     return instance
         .get(gateway+'users', {
             params: {
                 page: page,
-                size: size
+                size: size,
+                name: name
             },
         })
         .then((results)=>results.data);

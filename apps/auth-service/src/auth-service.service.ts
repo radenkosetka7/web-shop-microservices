@@ -162,12 +162,20 @@ export class AuthServiceService implements OnModuleInit {
     };
   }
 
-  async getAll(page: number, pageSize: number): Promise<any> {
+  async getAll(page: number, pageSize: number, name: string): Promise<any> {
     const startIndex = (page - 1) * pageSize;
     const endIndex = page * pageSize;
-    const users = await this.repository.find({
-      where: { role: Not(UserRole.ADMIN) },
+    let queryBuilder = this.repository.createQueryBuilder('u');
+
+    if (name !== '') {
+      queryBuilder = queryBuilder.where('LOWER(u.name) LIKE LOWER(:name)', {
+        name: `%${name}%`,
+      });
+    }
+    queryBuilder.andWhere('u.role != :adminRole', {
+      adminRole: UserRole.ADMIN,
     });
+    const [users, total] = await queryBuilder.getManyAndCount();
     const selectedUsers = users.slice(startIndex, endIndex);
     const adminUserResponses = selectedUsers.map((user) => {
       const adminUserResponse = new AdminUserResponse(user);
@@ -175,7 +183,7 @@ export class AuthServiceService implements OnModuleInit {
       adminUserResponse.status = UserStatus[user.status];
       return adminUserResponse;
     });
-    return { users: adminUserResponses, total: users.length };
+    return { users: adminUserResponses, total: total };
   }
 
   async getUserByUsername(username: string, status: number): Promise<any> {

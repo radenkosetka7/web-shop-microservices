@@ -33,9 +33,9 @@ export class ApiGatewayService {
     @Inject('CATEGORY_SERVICE') private readonly categoryClient: ClientProxy,
   ) {}
 
-  async getUsers(page: number, pageSize: number): Promise<any> {
+  async getUsers(page: number, pageSize: number, name: string): Promise<any> {
     return await lastValueFrom(
-      this.userClient.send('getUsers', { page, pageSize }),
+      this.userClient.send('getUsers', { page, pageSize, name }),
     );
   }
 

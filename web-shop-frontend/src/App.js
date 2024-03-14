@@ -14,10 +14,10 @@ import Profile from "./pages/Profile/Profile";
 import ViewProduct from "./pages/ViewProduct/ViewProduct";
 import Messages from "./pages/Messages/Messages";
 import Categories from "./pages/Admin/Categories";
-import User from "./services/user.service";
 import PrivateRoutesUser from "./util/PrivateRoutesUser";
 import PrivateRoutesSupport from "./util/PrivateRoutesSupport";
 import PrivateRoutesAdmin from "./util/PrivateRoutesAdmin";
+import Users from "./pages/Admin/Users";
 
 function App() {
 
@@ -58,7 +58,7 @@ function App() {
               </Route>
               <Route element={<PrivateRoutesAdmin/>}>
                   <Route path="/categories" element={<Categories/>} exact />
-                  <Route path="/users" element={<User/>} exact />
+                  <Route path="/users" element={<Users/>} exact />
               </Route>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} exact/>

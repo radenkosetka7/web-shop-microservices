@@ -30,9 +30,9 @@ export const changePassword = createAsyncThunk("users/changePassword", async ({
     }
 });
 
-export const getAllUsers = createAsyncThunk("user/getAllUsers", async ({page,size},{rejectWithValue}) => {
+export const getAllUsers = createAsyncThunk("user/getAllUsers", async ({page,size,name},{rejectWithValue}) => {
     try {
-        return await userService.getUsers(page,size);
+        return await userService.getUsers(page,size,name);
     } catch (err) {
         return rejectWithValue("There is some problem with getting data. Please try later.");
     }

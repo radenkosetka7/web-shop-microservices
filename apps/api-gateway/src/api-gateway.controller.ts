@@ -61,8 +61,9 @@ export class ApiGatewayController {
   async getUsers(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('size', new DefaultValuePipe(10), ParseIntPipe) pageSize: number,
+    @Query('name', new DefaultValuePipe('')) name: string,
   ): Promise<any> {
-    return await this.apiGatewayService.getUsers(page, pageSize);
+    return await this.apiGatewayService.getUsers(page, pageSize, name);
   }
 
   @Post('activateAccount')

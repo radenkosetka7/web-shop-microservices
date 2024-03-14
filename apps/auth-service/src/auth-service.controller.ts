@@ -34,8 +34,8 @@ export class AuthServiceController {
 
   @MessagePattern('getUsers')
   async findAll(data: any): Promise<any> {
-    const { page, pageSize } = data;
-    return await this.authServiceService.getAll(page, pageSize);
+    const { page, pageSize, name } = data;
+    return await this.authServiceService.getAll(page, pageSize, name);
   }
 
   @MessagePattern('getUserById')
