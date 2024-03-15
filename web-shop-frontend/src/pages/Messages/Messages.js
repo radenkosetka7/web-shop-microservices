@@ -108,7 +108,7 @@ const Messages = () => {
         size:size,
         total:messages.total,
         showSizeChanger: true,
-        pageSizeOptions: ['5', '10', '50'],
+        pageSizeOptions: ['10', '20', '50'],
       }}>
       </Table>
       </div>

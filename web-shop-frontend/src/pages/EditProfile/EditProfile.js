@@ -44,13 +44,13 @@ const EditProfile = ({show,onClose}) => {
             await dispatch(updateUser({id:loggedUser.id,value:uploadData}));
             if(avatar)
             {
-                uploadImage(formData,uid);
+                await uploadImage(formData,uid);
             }
-            setTimeout(() => {
+              setTimeout(() => {
                 setIsDisabled(false);
                 onClose();
-            }, 1000);
-            dispatch(getLoggedUser({}));
+                dispatch(getLoggedUser({}));
+              }, 1000);
         }
 
     };
@@ -58,7 +58,6 @@ const EditProfile = ({show,onClose}) => {
     useEffect(() => {
         if(loggedUser.avatar) {
             const img = require('../../assets/users/'+loggedUser.avatar+'.png');
-            console.log('sta je avatar ' + img);
             setImages([
                 {
                     uid: '-1',

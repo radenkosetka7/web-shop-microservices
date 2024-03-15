@@ -17,7 +17,7 @@ const Home = () => {
     const [current, setCurrent] = useState(1);
     const [title, setTitle] = useState("");
     const {products,selectedProduct} = useSelector((state) => state.products);
-    const [size, setSize] = useState(2);
+    const [size, setSize] = useState(10);
     const [page, setPage] = useState(1);
     const {categories, selectedCategory,attributes} = useSelector((state) => state.categories);
     const [removeCategoryFlag, setRemoveCategoryFlag] = useState(0);
@@ -262,7 +262,7 @@ const Home = () => {
                 <Footer style={{backgroundColor: "#1d8f8a"}} className='footerStyle'>
                     {products.products && products.total && (
                         <Pagination
-                            pageSize={2}
+                            showSizeChanger
                             onShowSizeChange={onShowSizeChange}
                             onChange={handlePaginationChange}
                             current={current}

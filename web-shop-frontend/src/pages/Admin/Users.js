@@ -134,7 +134,7 @@ const Users = () => {
           size: size,
           total: users.total,
           showSizeChanger: true,
-          pageSizeOptions: ['5', '10', '50'],
+          pageSizeOptions: ['10', '20', '50'],
         }}>
         </Table>
       </div>

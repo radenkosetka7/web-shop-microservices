@@ -57,8 +57,10 @@ function App() {
                   <Route path="/messages" element={<Messages/>} exact />
               </Route>
               <Route element={<PrivateRoutesAdmin/>}>
-                  <Route path="/categories" element={<Categories/>} exact />
                   <Route path="/users" element={<Users/>} exact />
+              </Route>
+              <Route element={<PrivateRoutesAdmin/>}>
+                  <Route path="/categories" element={<Categories/>} exact />
               </Route>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} exact/>
