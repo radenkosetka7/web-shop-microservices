@@ -5,8 +5,7 @@ import SearchComponent from "../../components/Search/Search";
 import { Button, Layout, Space, Table, Tooltip } from "antd";
 import { FaCircle } from "react-icons/fa";
 import { EditTwoTone, PlusOutlined, UserDeleteOutlined } from "@ant-design/icons";
-const {Footer} = Layout;
-
+const { Footer } = Layout;
 
 const Users = () => {
 
@@ -14,46 +13,39 @@ const Users = () => {
   const [size, setSize] = useState(10);
   const [current, setCurrent] = useState(1);
   const dispatch = useDispatch()
-  const {users} = useSelector((state) => state.users);
-
-
+  const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
-    dispatch(getAllUsers({page: current, size: size}))
+    dispatch(getAllUsers({ page: current, size: size }))
   }, [])
 
   const onSearch = (value) => {
     setName(value);
     setCurrent(1);
-    const newPage = { current: 1, pageSize: size, name:value };
-    dispatch(getAllUsers({page: newPage.current, size: newPage.pageSize,name:newPage.name}))
+    const newPage = { current: 1, pageSize: size, name: value };
+    dispatch(getAllUsers({ page: newPage.current, size: newPage.pageSize, name: newPage.name }))
   };
 
-  function ReadStatus(check)
-  {
-    if(check === "ACTIVE")
-    {
+  function ReadStatus(check) {
+    if (check === "ACTIVE") {
       return <Tooltip placement={"top"} title={"Active"}>
-        <FaCircle color="green" size="1em"/>
+        <FaCircle color="green" size="1em" />
       </Tooltip>;
     }
-    else if(check === "REQUESTED")
-    {
+    else if (check === "REQUESTED") {
       return <Tooltip placement={"top"} title={"Requested"}>
-        <FaCircle color="blue" size="1em"/>
+        <FaCircle color="blue" size="1em" />
       </Tooltip>;
     }
     return <Tooltip placement={"top"} title={"Blocked"}>
-      <FaCircle color="red" size="1em"/>
+      <FaCircle color="red" size="1em" />
     </Tooltip>;
   }
 
-  function ShowAvatar(avatar)
-  {
+  function ShowAvatar(avatar) {
     console.log("avatar " + avatar);
-    return <img width={50} src={ avatar != null ? require(`../../assets/users/`+avatar+'.png') : require('../../assets/user_318-159711.avif')} alt={require('../../assets/user_318-159711.avif')}/>
+    return <img width={50} src={avatar != null ? require(`../../assets/users/` + avatar + '.png') : require('../../assets/user_318-159711.avif')} alt={require('../../assets/user_318-159711.avif')} />
   }
-
 
   const columns = [
     {
@@ -85,7 +77,7 @@ const Users = () => {
       title: 'Avatar',
       dataIndex: 'avatar',
       key: 'avatar',
-      render:(cell)=> {
+      render: (cell) => {
         return ShowAvatar(cell)
       }
     },
@@ -98,7 +90,7 @@ const Users = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render:(cell)=> {
+      render: (cell) => {
         return ReadStatus(cell)
       }
     },
@@ -108,15 +100,15 @@ const Users = () => {
       render: (_, record) => (
         <Space size="middle">
           <Tooltip placement={"top"} title={"Edit"}>
-          <Button>
-            <EditTwoTone />
-          </Button>
+            <Button>
+              <EditTwoTone />
+            </Button>
           </Tooltip>
           <Tooltip placement={"top"} title={"Block"}>
-          <Button style={{backgroundColor:'red'}}>
-            <UserDeleteOutlined />
-          </Button>
-        </Tooltip>
+            <Button style={{ backgroundColor: 'red' }}>
+              <UserDeleteOutlined />
+            </Button>
+          </Tooltip>
         </Space>
       ),
     },
@@ -125,12 +117,15 @@ const Users = () => {
   const handleChange = (newPage) => {
     setCurrent(newPage.current);
     setSize(newPage.pageSize);
-    dispatch(getAllUsers({page: newPage.current, size: newPage.pageSize,name:name}))
+    dispatch(getAllUsers({ page: newPage.current, size: newPage.pageSize, name: name }))
   };
 
   return (
     <div>
       <SearchComponent onSearch={onSearch} />
+      <Tooltip placement={"top"} title={"Add"}>
+      <Button type="primary" shape="circle" icon={<PlusOutlined />} style={{ float: 'right', width:'30px', marginRight: '20px', marginTop: '20px' }} />
+      </Tooltip>
       <h1>Users</h1>
       <hr />
       <div style={{ minHeight: "61.8vh" }}>
@@ -145,7 +140,6 @@ const Users = () => {
       </div>
       <Footer style={{ backgroundColor: "#1d8f8a" }}>
       </Footer>
-
     </div>
   )
 }

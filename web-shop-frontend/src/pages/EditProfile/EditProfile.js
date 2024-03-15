@@ -56,16 +56,18 @@ const EditProfile = ({show,onClose}) => {
     };
 
     useEffect(() => {
-        const img = require("../../assets/users/" + loggedUser.avatar + ".png")
-        console.log('sta je avatar ' + img);
-        setImages([
-            {
-                uid:'-1',
-                name:'image.png',
-                status:'done',
-                url: img
-            }
-        ])
+        if(loggedUser.avatar) {
+            const img = require('../../assets/users/'+loggedUser.avatar+'.png');
+            console.log('sta je avatar ' + img);
+            setImages([
+                {
+                    uid: '-1',
+                    name: 'image.png',
+                    status: 'done',
+                    url: img
+                }
+            ])
+        }
     }, [loggedUser]);
 
     return (
@@ -158,6 +160,8 @@ const EditProfile = ({show,onClose}) => {
                     ><Upload name={"file"}
                              accept=".png,.jpeg,.jpg"
                              className="m-2 custom-upload"
+                             beforeUpload={() => false}
+                             listType="picture-card"
                              onChange={handleChangeImage}
                              fileList={images}
                              maxCount={1}
