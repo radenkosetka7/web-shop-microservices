@@ -31,7 +31,6 @@ import {
 } from '@nestjs/platform-express';
 import { MessageRequest } from 'apps/messages-service/src/models/requests/message.request';
 import { ProductRequest } from 'apps/products-service/src/models/requests/products.request';
-import { Product } from 'apps/products-service/src/models/entities/product.entity';
 import { CommentRequest } from 'apps/comments-service/src/models/requests/comment.request';
 import { CommentAnswerRequest } from 'apps/comments-service/src/models/requests/comment-answer.request';
 import { Message } from 'apps/messages-service/src/models/entities/message.entity';
@@ -107,6 +106,20 @@ export class ApiGatewayController {
       );
     }
     return result;
+  }
+  @Get('users/:id')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(AuthGuard, RolesGuard)
+  async getUserAdmin(@Param('id') id: string): Promise<any> {
+    const userReq = await this.apiGatewayService.getUsersByUserId(id);
+    if (userReq?.statusCode) {
+      const httpStatus = this.mapStatusCodeToHttpStatus(userReq?.statusCode);
+      throw new HttpException(
+        { statusCode: userReq?.statusCode, message: userReq?.message },
+        httpStatus,
+      );
+    }
+    return userReq;
   }
 
   @Get('userInfo')

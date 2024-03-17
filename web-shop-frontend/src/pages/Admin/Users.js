@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../redux-store/userSlice";
+import { blockUser, getAllUsers, getUser } from "../../redux-store/userSlice";
 import SearchComponent from "../../components/Search/Search";
 import { Button, Layout, Space, Table, Tooltip } from "antd";
 import { FaCircle } from "react-icons/fa";
 import { EditTwoTone, PlusOutlined, UserDeleteOutlined } from "@ant-design/icons";
+import EditUser from "./EditUser";
+import AddUser from "./AddUser";
 const { Footer } = Layout;
 
 const Users = () => {
@@ -13,11 +15,42 @@ const Users = () => {
   const [size, setSize] = useState(10);
   const [current, setCurrent] = useState(1);
   const dispatch = useDispatch()
+  const [editModal, setEditModal] = useState(false);
+  const [addModal, setAddModal] = useState(false);
+
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [temp, setTemp] = useState(false);
+
+
   const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getAllUsers({ page: current, size: size }))
-  }, [])
+  }, [temp])
+
+
+  const handleCloseReplyModal = () => {
+    setEditModal(false);
+    setTemp(true);
+  };
+
+  const handleCloseAddModal = () => {
+    setAddModal(false);
+    setTemp(null);
+  };
+
+
+  const handleEditClick = async (record) => {
+    await dispatch(getUser({ id: record.id }))
+    setEditModal(true);
+    setSelectedRecord(record);
+  };
+  const handleDeleteClick = (record) => {
+    dispatch(blockUser({id:record.id}))
+    setTemp(false);
+    setSelectedRecord(null);
+  };
+
 
   const onSearch = (value) => {
     setName(value);
@@ -43,7 +76,6 @@ const Users = () => {
   }
 
   function ShowAvatar(avatar) {
-    console.log("avatar " + avatar);
     return <img width={50} src={avatar != null ? require(`../../assets/users/` + avatar + '.png') : require('../../assets/user_318-159711.avif')} alt={require('../../assets/user_318-159711.avif')} />
   }
 
@@ -100,12 +132,12 @@ const Users = () => {
       render: (_, record) => (
         <Space size="middle">
           <Tooltip placement={"top"} title={"Edit"}>
-            <Button>
+            <Button onClick={() => handleEditClick(record)}>
               <EditTwoTone />
             </Button>
           </Tooltip>
           <Tooltip placement={"top"} title={"Block"}>
-            <Button style={{ backgroundColor: 'red' }}>
+            <Button style={{ backgroundColor: 'red' }} onClick={() => handleDeleteClick(record)}>
               <UserDeleteOutlined />
             </Button>
           </Tooltip>
@@ -124,7 +156,7 @@ const Users = () => {
     <div>
       <SearchComponent onSearch={onSearch} />
       <Tooltip placement={"top"} title={"Add"}>
-      <Button type="primary" shape="circle" icon={<PlusOutlined />} style={{ float: 'right', width:'30px', marginRight: '20px', marginTop: '20px' }} />
+      <Button type="primary" shape="circle" onClick={() => setAddModal(true)} icon={<PlusOutlined />} style={{ float: 'right', width:'30px', marginRight: '20px', marginTop: '20px' }} />
       </Tooltip>
       <h1>Users</h1>
       <hr />
@@ -140,6 +172,9 @@ const Users = () => {
       </div>
       <Footer style={{ backgroundColor: "#1d8f8a" }}>
       </Footer>
+      {editModal && <EditUser show={editModal} onClose={handleCloseReplyModal}/>}
+      {addModal && <AddUser show={addModal} onClose={handleCloseAddModal}/>}
+
     </div>
   )
 }

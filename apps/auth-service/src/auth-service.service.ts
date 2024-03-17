@@ -16,7 +16,6 @@ import { AdminCreateUserRequest } from './models/requests/admin-user.request';
 import { AdminUpdateUserRequest } from './models/requests/admin-user-update.request';
 import { AccountActivationRequest } from './models/requests/activate-account.request';
 import { lastValueFrom } from 'rxjs';
-import { Not } from 'typeorm';
 
 @Injectable()
 export class AuthServiceService implements OnModuleInit {
@@ -217,6 +216,7 @@ export class AuthServiceService implements OnModuleInit {
       avatar: user.avatar,
       email: user.email,
       role: user.role,
+      status: user.status,
     };
     return filteredData;
   }
@@ -297,13 +297,7 @@ export class AuthServiceService implements OnModuleInit {
     if (!user) {
       return { statusCode: 404, message: 'User does not exist.' };
     }
-    const savedUser = this.repository.save(updateUser).then((user) => {
-      const adminUserResponse = new AdminUserResponse(user);
-      adminUserResponse.role = UserRole[user.role];
-      adminUserResponse.status = UserStatus[user.status];
-      return adminUserResponse;
-    });
-
+    const savedUser = this.repository.update(id, updateUser);
     return savedUser;
   }
 

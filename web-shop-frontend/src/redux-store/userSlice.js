@@ -20,6 +20,7 @@ export const updateUser = createAsyncThunk("users/updateUser", async ({
 export const getUser = createAsyncThunk("users/getUser", async ({id}) => {
     return await userService.getUser(id);
 });
+
 export const changePassword = createAsyncThunk("users/changePassword", async ({
                                                                           value
                                                                       }, {rejectWithValue}) => {
