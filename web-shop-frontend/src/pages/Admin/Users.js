@@ -19,7 +19,7 @@ const Users = () => {
   const [addModal, setAddModal] = useState(false);
 
   const [selectedRecord, setSelectedRecord] = useState(null);
-  const [temp, setTemp] = useState(false);
+  const [temp, setTemp] = useState('');
 
 
   const { users } = useSelector((state) => state.users);
