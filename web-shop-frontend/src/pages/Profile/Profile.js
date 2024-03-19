@@ -175,7 +175,7 @@ const Profile = () => {
                                     ))
                                 ) :
                                 (
-                                    <p style={{color: "black", fontWeight: "bold", fontSize: "20px"}}>Loading...</p>
+                                    <p style={{color: "black", fontWeight: "bold", fontSize: "20px"}}>No products found.</p>
                                 )}
                         </div>
                     </Content>

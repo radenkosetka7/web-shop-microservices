@@ -343,6 +343,7 @@ export class ProductsServiceService {
     const attributeValues = await this.attributeValuesRepository.find({
       where: { attributeId: attributeId },
     });
+
     for (const attributeValue of attributeValues) {
       this.attributeValuesRepository.delete(attributeValue);
       this.delete(attributeValue.productId);

@@ -19,24 +19,25 @@ const Users = () => {
   const [addModal, setAddModal] = useState(false);
 
   const [selectedRecord, setSelectedRecord] = useState(null);
-  const [temp, setTemp] = useState('');
+  const [refreshKey, setRefreshKey] = useState(0);
+
 
 
   const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getAllUsers({ page: current, size: size }))
-  }, [temp])
+  }, [refreshKey])
 
 
   const handleCloseReplyModal = () => {
     setEditModal(false);
-    setTemp(true);
+    setRefreshKey((prevKey) => prevKey + 1);
   };
 
   const handleCloseAddModal = () => {
     setAddModal(false);
-    setTemp(null);
+    setRefreshKey((prevKey) => prevKey + 1);
   };
 
 
@@ -47,7 +48,7 @@ const Users = () => {
   };
   const handleDeleteClick = (record) => {
     dispatch(blockUser({id:record.id}))
-    setTemp(false);
+    setRefreshKey((prevKey) => prevKey + 1);
     setSelectedRecord(null);
   };
 

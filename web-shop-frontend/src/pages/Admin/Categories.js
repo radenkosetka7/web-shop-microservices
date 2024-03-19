@@ -3,12 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Layout, Space, Table, Tooltip } from "antd";
 import { FaEye } from "react-icons/fa";
 import { DeleteOutlined, EditTwoTone, PlusOutlined } from "@ant-design/icons";
-import { getCategories } from "../../redux-store/categorySlice";
-import { blockUser, getUser } from "../../redux-store/userSlice";
-import EditUser from "./EditUser";
-import AddUser from "./AddUser";
+import { deleteCategory, getCategories, getCategoryAttributes } from "../../redux-store/categorySlice";
 import EditCategory from "./EditCategory";
 import AddCategory from "./AddCategory";
+import ViewAttributes from "./ViewAttributes";
 const { Footer } = Layout;
 
 const Categories = () => {
@@ -20,26 +18,26 @@ const Categories = () => {
   const [editModal, setEditModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
   const [attributesModal, setAttributesModal] = useState(false);
-  const [temp, setTemp] = useState('');
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     dispatch(getCategories({}))
-  }, [])
+  }, [refreshKey])
 
-  const handleCloseReplyModal = () => {
+  const handleCloseEditModal = () => {
     setEditModal(false);
-    setTemp(true);
+    setRefreshKey((prevKey) => prevKey + 1);
   };
 
   const handleCloseAddModal = () => {
     setAddModal(false);
-    setTemp(null);
+    setRefreshKey((prevKey) => prevKey + 1);
   };
 
-  const handleDeleteClick = (record) => {
-    dispatch(blockUser({id:record.id}))
-    setTemp(false);
+  const handleDeleteClick = async (record) => {
+    await dispatch(deleteCategory({ value: record.id }))
+    setRefreshKey((prevKey) => prevKey + 1);
     setSelectedRecord(null);
   };
 
@@ -50,14 +48,13 @@ const Categories = () => {
   };
 
   const handleAttributesClick = async (record) => {
-    //await dispatch(getUser({ id: record.id }))
+    await dispatch(getCategoryAttributes({ value: record.id }))
     setAttributesModal(true);
     setSelectedRecord(record);
   };
 
   const handleCloseAttributesModal = () => {
     setAttributesModal(false);
-    setTemp(false);
   };
   const columns = [
     {
@@ -123,9 +120,9 @@ const Categories = () => {
       </div>
       <Footer style={{ backgroundColor: "#1d8f8a" }}>
       </Footer>
-      {editModal && <EditCategory show={editModal} onClose={handleCloseReplyModal}/>}
+      {editModal && <EditCategory show={editModal} onClose={handleCloseEditModal}/>}
       {addModal && <AddCategory show={addModal} onClose={handleCloseAddModal}/>}
-      {attributesModal && <AddCategory show={attributesModal} onClose={handleCloseAttributesModal}/>}
+      {attributesModal && <ViewAttributes show={attributesModal} onClose={handleCloseAttributesModal} record={selectedRecord}/>}
     </div>
   )
 }

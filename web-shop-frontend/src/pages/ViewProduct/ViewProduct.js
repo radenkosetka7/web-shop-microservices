@@ -204,7 +204,7 @@ const ViewProduct = () => {
                                            readOnly style={{width:'fit-content',marginRight:'10px',marginBottom:'10px'}} />
                                     <Input value={`Contact: ${selectedProduct.contact}`}
                                            readOnly style={{width:'fit-content',marginRight:'10px',marginBottom:'10px'}} />
-                                    <Input value={`Release date : ${formattedDate(selectedProduct.creationDate)}`}
+                                    <Input value={`Creation date : ${formattedDate(selectedProduct.creationDate)}`}
                                            readOnly style={{width:'250px',marginRight:'10px',marginBottom:'10px'}} />
                                     {selectedProduct.attributeValues.map((attribute, index) => (
                                         <Input

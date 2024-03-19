@@ -278,6 +278,8 @@ export class AuthServiceService implements OnModuleInit {
         message: 'User with given e-mail or username already exist.',
       };
     }
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword;
     const createdUser = this.repository.save(user).then((user) => {
       const adminUserResponse = new AdminUserResponse(user);
       adminUserResponse.role = UserRole[user.role];

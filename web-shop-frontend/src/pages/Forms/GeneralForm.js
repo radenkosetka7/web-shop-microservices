@@ -29,7 +29,7 @@ const GeneralForm = ({onFinish, initialValues}) => {
             </Form.Item >
             <Form.Item wrapperCol={{ offset: 2, span: 14 }} label="Description" name="description" rules={[
                 { required: true, message: 'Please enter a description.' },
-                { max: 255, message: 'Description must not exceed 1000 characters.' },
+                { max: 10000, message: 'Description must not exceed 10000 characters.' },
             ]}>
                 <TextArea rows={4} />
             </Form.Item>
