@@ -12,6 +12,7 @@ import { SearchRequest } from './models/requests/search.request';
 import { AttributeValuesRepository } from './attribute-value.repository';
 import { AttributeValue } from './models/entities/attribute-value.entity';
 import { AttributeValueResponse } from './models/responses/attribute-value.response';
+import { Not } from 'typeorm';
 
 @Injectable()
 export class ProductsServiceService {
@@ -226,10 +227,11 @@ export class ProductsServiceService {
     return result;
   }
 
-  async delete(id: string): Promise<any> {
-    const product = await this.productsRepository.findOne({
-      where: { id: id },
-    });
+  async delete(id: string, user: string): Promise<any> {
+    const product = await (user !== null
+      ? this.productsRepository.findOne({ where: { id: id, userSeller: user } })
+      : this.productsRepository.findOne({ where: { id: id } }));
+
     if (!product) {
       return { statusCode: 404, message: 'Product does not exist.' };
     }
@@ -259,7 +261,7 @@ export class ProductsServiceService {
   }
   async purchaseProduct(id: string, userId: string): Promise<any> {
     const product = await this.productsRepository.findOne({
-      where: { id: id },
+      where: { id: id, userBuyer: null, userSeller: Not(userId), finished: 0 },
     });
     if (!product) {
       return { statusCode: 404, message: 'Product does not exist.' };
@@ -346,7 +348,7 @@ export class ProductsServiceService {
 
     for (const attributeValue of attributeValues) {
       this.attributeValuesRepository.delete(attributeValue);
-      this.delete(attributeValue.productId);
+      this.delete(attributeValue.productId, null);
     }
     return 'AttributeValues deleted successfully.';
   }

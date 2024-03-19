@@ -28,8 +28,9 @@ export class ProductsServiceController {
     return await this.productsServiceService.getById(id);
   }
   @MessagePattern('deleteProduct')
-  async delete(id: string): Promise<any> {
-    return await this.productsServiceService.delete(id);
+  async delete(data: any): Promise<any> {
+    const { id, user } = data;
+    return await this.productsServiceService.delete(id, user);
   }
   @MessagePattern('deleteProductsList')
   async deleteProductsList(products: string[]) {

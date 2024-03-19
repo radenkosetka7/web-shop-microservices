@@ -351,8 +351,15 @@ export class ApiGatewayController {
   @Delete('products/:id')
   @Roles(UserRole.ORDINARY)
   @UseGuards(AuthGuard, RolesGuard)
-  async deleteProduct(@Param('id') id: string): Promise<any> {
-    const product = await this.apiGatewayService.deleteProduct(id);
+  async deleteProduct(
+    @Param('id') id: string,
+    @Req() request: Request,
+  ): Promise<any> {
+    const authenticatedUser = request['user'];
+    const product = await this.apiGatewayService.deleteProduct(
+      id,
+      authenticatedUser.sub,
+    );
     if (product?.statusCode) {
       const httpStatus = this.mapStatusCodeToHttpStatus(product?.statusCode);
       throw new HttpException(

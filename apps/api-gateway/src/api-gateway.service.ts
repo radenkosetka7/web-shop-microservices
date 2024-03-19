@@ -146,8 +146,10 @@ export class ApiGatewayService {
     return await lastValueFrom(this.productClient.send('getProductById', id));
   }
 
-  async deleteProduct(id: string): Promise<any> {
-    return await lastValueFrom(this.productClient.send('deleteProduct', id));
+  async deleteProduct(id: string, user: string): Promise<any> {
+    return await lastValueFrom(
+      this.productClient.send('deleteProduct', { id, user }),
+    );
   }
 
   async getAllProductsForBuyer(
