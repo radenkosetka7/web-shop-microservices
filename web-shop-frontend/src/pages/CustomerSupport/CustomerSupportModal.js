@@ -39,7 +39,7 @@ const CustomerSupportModal = ({show,onClose}) => {
                 >
                     <Form.Item label="Message" name="message" rules={[
                         { required: true, message: 'Please enter a message.' },
-                        { max: 255, message: 'Message must not exceed 255 characters.' },
+                        { max: 1000, message: 'Message must not exceed 1000 characters.' },
                     ]}>
                         <TextArea rows={4} />
                     </Form.Item>
@@ -50,7 +50,7 @@ const CustomerSupportModal = ({show,onClose}) => {
                     </Form.Item>
                     {
                         statusCode &&
-                        <p className='error1' style={{maxWidth: "250px"}}>
+                        <p className='replyMessageStyle' style={{maxWidth: "250px"}}>
                             {statusCode}
                         </p>
 

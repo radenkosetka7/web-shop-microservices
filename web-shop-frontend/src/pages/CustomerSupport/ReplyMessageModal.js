@@ -63,7 +63,7 @@ const ReplyMessageModal = ({ show, onClose, record }) => {
           </Form.Item>
           {
             statusCode &&
-            <p className='error1' style={{maxWidth: "250px"}}>
+            <p className='replyMessageStyle' style={{maxWidth: "250px"}}>
               {statusCode}
             </p>
 

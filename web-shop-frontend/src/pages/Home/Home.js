@@ -151,109 +151,114 @@ const Home = () => {
     return (<div style={{height: contentHeight}}>
         <SearchComponent onSearch={onSearch}/>
         <Layout style={{minHeight: '100%'}}>
-            <Sider className='siderStyle'
+            <Sider className="siderStyle"
                    breakpoint="lg"
-                   style={{backgroundColor: "#c5c5c5"}}
+                   style={{ backgroundColor: "#c5c5c5" }}
                    collapsedWidth="0">
-                <h2 style={{color: 'black'}}>Filter</h2>
+                <h2 style={{ color: "black" }}>Filter</h2>
                 <CategoryList categories={categories} onSelect={handleCategorySelect}
-                              setSelectedCategoryTemp={setSelectedCategoryTemp}/>
-                <hr/>
-                <br/>
-                <div style={{textAlign: 'left', marginLeft: '3%'}}>
+                              setSelectedCategoryTemp={setSelectedCategoryTemp} />
+                <hr />
+                <br />
+                <div style={{ textAlign: "left", marginLeft: "3%" }}>
                     <Select
-                        style={{backgroundColor: '#c5c5c5'}}
-                        placeholder="Select a status"
-                        value={selectedValue}
-                        onChange={onChangeValue}
-                        onSearch={onSearch}
-                        filterOption={(input, option) =>
-                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                        }
-                        options={[
-                            {
-                                value: '0',
-                                label: 'New',
-                            },
-                            {
-                                value: '1',
-                                label: 'Used',
-                            },
-                        ]}/>
+                      style={{ backgroundColor: "#c5c5c5" }}
+                      placeholder="Select a status"
+                      value={selectedValue}
+                      onChange={onChangeValue}
+                      onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                      }
+                      options={[
+                          {
+                              value: "0",
+                              label: "New"
+                          },
+                          {
+                              value: "1",
+                              label: "Used"
+                          }
+                      ]} />
                 </div>
-                <br/>
-                <div style={{textAlign: 'left', marginLeft: '3%'}}>
-                    <label style={{color: 'black', fontSize: '16px'}}>Location</label>
-                    <Input value={location} onChange={handleLocationChange}/>
+                <br />
+                <div style={{ textAlign: "left", marginLeft: "3%", marginRight: "3%" }}>
+                    <label style={{ color: "black", fontSize: "16px" }}>Location</label>
+                    <Input value={location} onChange={handleLocationChange} />
                 </div>
-                <br/>
-                <div style={{textAlign: 'left', marginLeft: '3%'}}>
-                    <label style={{color: 'black', fontSize: '16px'}}>Price</label>
-                    <br/>
-                    <InputNumber value={priceFrom} min={0} onChange={handlePriceFromChange} style={{width: '50%'}}
-                                 placeholder="Price from"/>
-                    <InputNumber value={priceTo} style={{width: '50%'}} min={priceFrom} onChange={handlePriceToChange}
-                                 placeholder="Price to"/>
+                <br />
+                <div style={{ textAlign: "left", marginLeft: "3%", marginRight: "3%" }}>
+                    <label style={{ color: "black", fontSize: "16px" }}>Price from</label>
+                    <br />
+                    <InputNumber value={priceFrom} min={0} onChange={handlePriceFromChange} style={{ width: "50%" }}
+                                 placeholder="Price from" />
                 </div>
-                <br/>
-                <br/>
+                <div style={{ textAlign: "left", marginLeft: "3%", marginRight: "3%" }}>
+                    <label style={{ color: "black", fontSize: "16px" }}>Price to</label>
+                    <br />
+                    <InputNumber value={priceTo} style={{ width: "50%" }} min={priceFrom} onChange={handlePriceToChange}
+                                 placeholder="Price to" />
+                </div>
+                <br />
+                <br />
                 {selectedCategoryTemp && (
-                    <div><h3 style={{color: 'black'}}>Specific attributes</h3>
-                        <hr/>
-                        {selectedCategory != null && attributes.map((attribute) => (
-                            <div key={attribute.id} style={{textAlign: 'left', marginLeft: '3%'}}>
-                                <label style={{color: 'black', fontSize: '16px'}}>{attribute.name}</label>
-                                <br/>
-                                {attribute.type === 'STRING' &&
-                                    <Input value={attributeValues[attribute.id]?.value || null} onChange={(e) => {
-                                        const newValue = e.target.value;
-                                        setAttributeValues(prevValues => ({
-                                            ...prevValues,
-                                            [attribute.id]: {
-                                                id: attribute.id,
-                                                name: attribute.name,
-                                                type: attribute.type,
-                                                value: newValue
-                                            },
-                                        }));
-                                    }}/>}
-                                {(attribute.type === 'INT' || attribute.type === 'DOUBLE') &&
-                                    <InputNumber value={attributeValues[attribute.id]?.value || 0} min={0}
-                                                 onChange={(value) => setAttributeValues(prevValues => ({
-                                                     ...prevValues,
-                                                     [attribute.id]: {
-                                                         id: attribute.id,
-                                                         name: attribute.name,
-                                                         type: attribute.type,
-                                                         value: value
-                                                     },
-                                                 }))}/>}
-                            </div>
-                        ))}
+                  <div style={{ marginRight: "3%" }}><h3 style={{ color: "black" }}>Specific attributes</h3>
+                      <hr />
+                      {selectedCategory != null && attributes.map((attribute) => (
+                        <div key={attribute.id} style={{ textAlign: "left", marginLeft: "3%" }}>
+                            <label style={{ color: "black", fontSize: "16px" }}>{attribute.name}</label>
+                            <br />
+                            {attribute.type === "STRING" &&
+                              <Input value={attributeValues[attribute.id]?.value || null} onChange={(e) => {
+                                  const newValue = e.target.value;
+                                  setAttributeValues(prevValues => ({
+                                      ...prevValues,
+                                      [attribute.id]: {
+                                          id: attribute.id,
+                                          name: attribute.name,
+                                          type: attribute.type,
+                                          value: newValue
+                                      }
+                                  }));
+                              }} />}
+                            {(attribute.type === "INT" || attribute.type === "DOUBLE") &&
+                              <InputNumber value={attributeValues[attribute.id]?.value || 0} min={0}
+                                           onChange={(value) => setAttributeValues(prevValues => ({
+                                               ...prevValues,
+                                               [attribute.id]: {
+                                                   id: attribute.id,
+                                                   name: attribute.name,
+                                                   type: attribute.type,
+                                                   value: value
+                                               }
+                                           }))} />}
+                        </div>
+                      ))}
 
-                    </div>)
+                  </div>)
                 }
-                <br/>
-                <br/>
-                <Button onClick={handleSubmit} type="primary" icon={<SearchOutlined/>}>
+                <br />
+                <br />
+                <Button onClick={handleSubmit} type="primary" icon={<SearchOutlined />}>
                     Search
                 </Button>
-                <br/>
-                <br/>
-                <Button onClick={handleClearFilters} type="default" icon={<ClearOutlined/>}>
+                <br />
+                <br />
+                <Button onClick={handleClearFilters} type="default" icon={<ClearOutlined />}>
                     Clear filters
                 </Button>
             </Sider>
             <Layout>
-                <Content className='contentStyle'>
-                    <div className='contentDiv'>
+                <Content className="contentStyle">
+                    <div className="contentDiv">
                         {products.products && products.products.length !== 0 ? (
-                                products.products.map(product => (
-                                    <div className='productCard'>
-                                    <CardComponent key={product.id} product={product} handleChangeRefreshKey={handleChangeRefreshKey}/>
-                                    </div>
-                                ))
-                            ) :
+                            products.products.map(product => (
+                              <div className="productCard">
+                                  <CardComponent key={product.id} product={product}
+                                                 handleChangeRefreshKey={handleChangeRefreshKey} />
+                              </div>
+                            ))
+                          ) :
                             (
                                 <p style={{color: "black", fontWeight: "bold", fontSize: "20px"}}>Loading...</p>
                             )}
