@@ -100,7 +100,6 @@ const categorySlice = createSlice({
         [crateCategory.fulfilled]: (state, action) => {
             state.loading = false;
             state.error=null;
-            state.categories = action.payload.data;
         },
         [crateCategory.pending]: (state,action) => {
             state.loading=true;
