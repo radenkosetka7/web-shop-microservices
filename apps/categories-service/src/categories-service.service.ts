@@ -37,7 +37,6 @@ export class CategoriesServiceService {
     category: UpdateCategoryRequest,
   ): Promise<any> {
     const categoryResponse = await this.getCategoryById(id);
-    console.log('sta je attrReq ' + JSON.stringify(category));
     if (categoryResponse?.statusCode) {
       return categoryResponse;
     }

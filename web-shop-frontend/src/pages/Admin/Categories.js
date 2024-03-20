@@ -36,9 +36,9 @@ const Categories = () => {
   };
 
   const handleDeleteClick = async (record) => {
-    // await dispatch(deleteCategory({ value: record.id }))
-    // setRefreshKey((prevKey) => prevKey + 1);
-    // setSelectedRecord(null);
+    await dispatch(deleteCategory({ value: record.id }))
+    setRefreshKey((prevKey) => prevKey + 1);
+    setSelectedRecord(null);
   };
 
   const handleEditClick = async (record) => {
