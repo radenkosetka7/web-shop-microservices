@@ -16,6 +16,7 @@ import { AdminCreateUserRequest } from './models/requests/admin-user.request';
 import { AdminUpdateUserRequest } from './models/requests/admin-user-update.request';
 import { AccountActivationRequest } from './models/requests/activate-account.request';
 import { lastValueFrom } from 'rxjs';
+import { Not } from 'typeorm';
 
 @Injectable()
 export class AuthServiceService implements OnModuleInit {
@@ -229,6 +230,16 @@ export class AuthServiceService implements OnModuleInit {
     if (user.id !== id) {
       return { statusCode: 403, message: 'Forbidden.' };
     }
+
+    const existingUserEmail = await this.repository.findOne({
+      where: { email: user.email, id: Not(id) },
+    });
+    if (existingUserEmail) {
+      return {
+        statusCode: 409,
+        message: 'User with given e-mail already exist.',
+      };
+    }
     await this.repository.update(id, updateUser);
     return await this.repository.findOne({
       where: { id: id },
@@ -293,11 +304,30 @@ export class AuthServiceService implements OnModuleInit {
     id: string,
     updateUser: AdminUpdateUserRequest,
   ): Promise<any> {
-    const user = this.repository.findOne({
+    const user = await this.repository.findOne({
       where: { id: id },
     });
     if (!user) {
       return { statusCode: 404, message: 'User does not exist.' };
+    }
+
+    const existingUserEmail = await this.repository.findOne({
+      where: { email: user.email, id: Not(id) },
+    });
+    if (existingUserEmail) {
+      return {
+        statusCode: 409,
+        message: 'User with given e-mail already exist.',
+      };
+    }
+    const existingUserUsername = await this.repository.findOne({
+      where: { username: user.username, id: Not(id) },
+    });
+    if (existingUserUsername) {
+      return {
+        statusCode: 409,
+        message: 'User with given username already exist.',
+      };
     }
     const savedUser = this.repository.update(id, updateUser);
     return savedUser;

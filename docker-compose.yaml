@@ -71,6 +71,15 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
 
+  web-shop-frontend:
+    build:
+      context: ./web-shop-frontend
+      dockerfile: Dockerfile
+    ports:
+      - '${FRONTEND_PORT}:${FRONTEND_PORT}'
+    volumes:
+      - ./web-shop-frontend/:/usr/src/app
+      - /usr/src/app/node_modules
   emails-service:
     build:
       context: .
