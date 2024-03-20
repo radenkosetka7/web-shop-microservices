@@ -36,20 +36,9 @@ export class CategoriesServiceController {
     return await this.categoriesServiceService.getCategoryById(id);
   }
 
-  @MessagePattern('updateAttribute')
-  async updateAttribute(data: any): Promise<any> {
-    const { id, attribute } = data;
-    return await this.categoriesServiceService.updateAttribute(id, attribute);
-  }
-
   @MessagePattern('deleteCategory')
   async deleteCategory(id: string): Promise<any> {
     return await this.categoriesServiceService.deleteCategory(id);
-  }
-
-  @MessagePattern('deleteAttribute')
-  async deleteAttribute(id: string): Promise<string> {
-    return await this.categoriesServiceService.deleteAttribute(id);
   }
 
   @MessagePattern('getAttribute')

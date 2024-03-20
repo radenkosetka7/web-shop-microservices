@@ -36,13 +36,13 @@ const Categories = () => {
   };
 
   const handleDeleteClick = async (record) => {
-    await dispatch(deleteCategory({ value: record.id }))
-    setRefreshKey((prevKey) => prevKey + 1);
-    setSelectedRecord(null);
+    // await dispatch(deleteCategory({ value: record.id }))
+    // setRefreshKey((prevKey) => prevKey + 1);
+    // setSelectedRecord(null);
   };
 
   const handleEditClick = async (record) => {
-    //await dispatch(getUser({ id: record.id }))
+    await dispatch(getCategoryAttributes({ value: record.id }))
     setEditModal(true);
     setSelectedRecord(record);
   };
@@ -120,7 +120,7 @@ const Categories = () => {
       </div>
       <Footer style={{ backgroundColor: "#1d8f8a" }}>
       </Footer>
-      {editModal && <EditCategory show={editModal} onClose={handleCloseEditModal}/>}
+      {editModal && <EditCategory show={editModal} onClose={handleCloseEditModal} category={selectedRecord}/>}
       {addModal && <AddCategory show={addModal} onClose={handleCloseAddModal}/>}
       {attributesModal && <ViewAttributes show={attributesModal} onClose={handleCloseAttributesModal} record={selectedRecord}/>}
     </div>
