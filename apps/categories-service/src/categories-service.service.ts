@@ -37,10 +37,27 @@ export class CategoriesServiceService {
     category: UpdateCategoryRequest,
   ): Promise<any> {
     const categoryResponse = await this.getCategoryById(id);
+    console.log('sta je attrReq ' + JSON.stringify(category));
     if (categoryResponse?.statusCode) {
       return categoryResponse;
     }
-    await this.categoryRepository.update(id, category);
+    const categoryRequest = {
+      name: category.name,
+    };
+    await this.categoryRepository.update(id, categoryRequest);
+    for (const attribute of category.updatedAttributes) {
+      await this.updateAttribute(attribute);
+    }
+    for (const attribute of category.deletedAttributes) {
+      await this.deleteAttribute(attribute.id);
+    }
+    for (const attribute of category.addedAttributes) {
+      const attributeReq = {
+        ...attribute,
+        category: categoryResponse,
+      };
+      this.attributeRepository.save(attributeReq);
+    }
     return await this.categoryRepository.findOne({ where: { id: id } });
   }
 
@@ -68,16 +85,15 @@ export class CategoriesServiceService {
     return category;
   }
 
-  async updateAttribute(
-    id: string,
-    attribute: UpdateAttributeRequest,
-  ): Promise<any> {
-    const attributeResponse = await this.getAttribute(id);
+  async updateAttribute(attribute: UpdateAttributeRequest): Promise<any> {
+    const attributeResponse = await this.getAttribute(attribute.id);
     if (attributeResponse?.statusCode) {
       return attributeResponse;
     }
-    await this.attributeRepository.update(id, attribute);
-    return await this.attributeRepository.findOne({ where: { id: id } });
+    await this.attributeRepository.update(attribute.id, attribute);
+    return await this.attributeRepository.findOne({
+      where: { id: attribute.id },
+    });
   }
 
   async deleteCategory(id: string): Promise<any> {

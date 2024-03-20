@@ -255,15 +255,6 @@ export class ApiGatewayService {
     return await lastValueFrom(this.categoryClient.send('getCategoryById', id));
   }
 
-  async updateAttribute(
-    id: string,
-    attribute: UpdateAttributeRequest,
-  ): Promise<any> {
-    return await lastValueFrom(
-      this.categoryClient.send('updateAttribute', { id, attribute }),
-    );
-  }
-
   async deleteCategory(id: string): Promise<any> {
     return await lastValueFrom(this.categoryClient.send('deleteCategory', id));
   }

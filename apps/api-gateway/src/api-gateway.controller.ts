@@ -36,7 +36,6 @@ import { CommentAnswerRequest } from 'apps/comments-service/src/models/requests/
 import { Message } from 'apps/messages-service/src/models/entities/message.entity';
 import { CreateCategoryRequest } from 'apps/categories-service/src/models/requests/create-category.request';
 import { Category } from 'apps/categories-service/src/models/entities/category.entity';
-import { UpdateAttributeRequest } from 'apps/categories-service/src/models/requests/update-attribute.request';
 import { ProductResponse } from 'apps/products-service/src/models/responses/product.response';
 import { UpdateCategoryRequest } from 'apps/categories-service/src/models/requests/update-category.request';
 import { SearchRequest } from 'apps/products-service/src/models/requests/search.request';
@@ -545,24 +544,6 @@ export class ApiGatewayController {
       );
     }
     return category;
-  }
-
-  @Put('attributes/:id')
-  @Roles(UserRole.ADMIN)
-  @UseGuards(AuthGuard, RolesGuard)
-  async updateAttribute(
-    @Param('id') id: string,
-    @Body() attribute: UpdateAttributeRequest,
-  ): Promise<any> {
-    const result = await this.apiGatewayService.updateAttribute(id, attribute);
-    if (result?.statusCode) {
-      const httpStatus = this.mapStatusCodeToHttpStatus(result?.statusCode);
-      throw new HttpException(
-        { statusCode: result?.statusCode, message: result?.message },
-        httpStatus,
-      );
-    }
-    return result;
   }
 
   @Delete('categories/:id')
