@@ -3,7 +3,6 @@ import { Button, Form, Input, Modal, Select } from "antd";
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCategory } from "../../redux-store/categorySlice";
-import { getLoggedUser } from "../../redux-store/userSlice";
 
 const { Option } = Select;
 
