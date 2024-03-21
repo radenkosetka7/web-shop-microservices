@@ -110,7 +110,7 @@ const DropDownMenu = () => {
                 <a onClick={(e) => e.preventDefault()}>
                     <div className='logo-map'>
                         <div className='round-image-container'>
-                            <img className='confLogo round-image' src={ loggedUser.avatar !== null ? require("../../assets/users/" + loggedUser.avatar+".png"):require("../../assets/user_318-159711.avif")}  alt="Logo"/>
+                            <img className='confLogo round-image' src={ loggedUser.avatar !== null ? require("/usr/src/app/src/assets/users/" + loggedUser.avatar+".png"):require("/usr/src/app/src/assets/user_318-159711.avif")}  alt="Logo"/>
                         </div>
                     </div>
                 </a>

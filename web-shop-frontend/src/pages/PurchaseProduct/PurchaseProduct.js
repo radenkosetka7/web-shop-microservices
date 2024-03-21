@@ -21,7 +21,7 @@ const PurchaseProduct = ({ show, onClose, onFinish }) => {
         <Card style={{ display: 'flex', alignItems: 'center', width: 'fit-content', backgroundColor: 'transparent', borderColor: 'black', marginRight: '10%' }}>
           <img
             alt="example"
-            src={require("../../assets/products/" + selectedProduct.images[0].productImage + ".png")}
+            src={require("/usr/src/app/src/assets/products/" + selectedProduct.images[0].productImage + ".png")}
             className='image'
           />
           <div className='right'>

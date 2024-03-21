@@ -66,7 +66,7 @@ const EditUser = ({ show, onClose }) => {
 
   useEffect(() => {
     if (user?.avatar) {
-      const img = require("../../assets/users/" + user.avatar + ".png");
+      const img = require("/usr/src/app/src/assets/users/" + user.avatar + ".png");
       setImages([
         {
           uid: "-1",

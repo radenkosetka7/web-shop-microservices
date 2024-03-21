@@ -27,8 +27,8 @@ const CardComponent = ({product, handleChangeRefreshKey}) => {
        <Card
             hoverable
             className='card'
-            cover={<img style={{height:'200px'}} alt="example" className='image' alt="Logo"
-                        src={require('../../assets/products/' + product.images[0].productImage+".png")}/>}
+            cover={<img style={{height:'200px'}} className='image' alt="Logo"
+                        src={require('/usr/src/app/src/assets/products/' + product.images[0].productImage+".png")}/>}
         >
             <Meta className='price' title={product.title} description={`${product.price} BAM`}/>
            <br/>

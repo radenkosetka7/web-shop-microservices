@@ -57,7 +57,7 @@ const EditProfile = ({show,onClose}) => {
 
     useEffect(() => {
         if(loggedUser.avatar) {
-            const img = require('../../assets/users/'+loggedUser.avatar+'.png');
+            const img = require('/usr/src/app/src/assets/users/'+loggedUser.avatar+'.png');
             setImages([
                 {
                     uid: '-1',

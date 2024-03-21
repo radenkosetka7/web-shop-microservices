@@ -79,6 +79,8 @@ services:
       - '${FRONTEND_PORT}:${FRONTEND_PORT}'
     volumes:
       - ./web-shop-frontend/:/usr/src/app
+      - ./web-shop-frontend/src/assets/users:/usr/src/app/src/assets/users
+      - ./web-shop-frontend/src/assets/products:/usr/src/app/src/assets/products
       - /usr/src/app/node_modules
 
   emails-service:

@@ -37,7 +37,7 @@ const Users = () => {
 
   const handleCloseAddModal = () => {
     setAddModal(false);
-    setRefreshKey((prevKey) => prevKey + 1);
+    //setRefreshKey((prevKey) => prevKey + 1);
   };
 
 
@@ -77,7 +77,8 @@ const Users = () => {
   }
 
   function ShowAvatar(avatar) {
-    return <img width={50} src={avatar != null ? require(`../../assets/users/` + avatar + '.png') : require('../../assets/user_318-159711.avif')} alt={require('../../assets/user_318-159711.avif')} />
+    return <img width={50} src={avatar != null ? require(`/usr/src/app/src/assets/users/${avatar}.png`) : require('/usr/src/app/src/assets/user_318-159711.avif')} alt={require('/usr/src/app/src/assets/user_318-159711.avif')} />
+
   }
 
   const columns = [
