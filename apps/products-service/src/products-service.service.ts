@@ -22,6 +22,7 @@ export class ProductsServiceService {
     @InjectRepository(Image)
     private readonly imagesRepository: ImagesRepository,
     @Inject('CATEGORY_SERVICE') private readonly categoryClient: ClientProxy,
+    @Inject('COMMENT_SERVICE') private readonly commentClient: ClientProxy,
     @InjectRepository(AttributeValue)
     private readonly attributeValuesRepository: AttributeValuesRepository,
   ) {}
@@ -195,7 +196,7 @@ export class ProductsServiceService {
     }
 
     const comments = await lastValueFrom(
-      this.categoryClient.send('productComments', product.id),
+      this.commentClient.send('productComments', product.id),
     );
     const category = await lastValueFrom(
       this.categoryClient.send('getCategoryById', product.category),
