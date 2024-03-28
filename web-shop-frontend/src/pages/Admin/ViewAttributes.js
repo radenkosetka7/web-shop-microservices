@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import React from "react";
-import { Button, Form, Input, Modal, Select, Upload, Row, Col } from "antd";
-import { invalidEmail, isRequired } from "../../constant/constants";
-import { PlusOutlined } from "@ant-design/icons";
+import { Col, Form, Input, Modal, Row } from "antd";
 
 const ViewAttributes = ({ show, onClose, record }) => {
   const { attributes } = useSelector((state) => state.categories);
@@ -14,7 +12,7 @@ const ViewAttributes = ({ show, onClose, record }) => {
         title={<div style={{ textAlign: "center", fontSize: "20px" }}>{record.name} Attributes</div>}
         footer={[]}
         open={show}
-        style={{ overflowY: 'auto' }}
+        style={{ overflowY: "auto" }}
 
         onCancel={onClose}
       >
@@ -36,7 +34,7 @@ const ViewAttributes = ({ show, onClose, record }) => {
                 <label htmlFor={`type-${attribute.id}`}>Type</label>
                 <Input disabled={true} id={`type-${attribute.id}`} value={attribute.type} />
               </Col>
-              <hr/>
+              <hr />
             </Row>
 
           ))}

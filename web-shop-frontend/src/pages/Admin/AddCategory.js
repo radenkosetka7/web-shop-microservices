@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Modal, Select } from "antd";
-import {MinusCircleOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { crateCategory } from "../../redux-store/categorySlice";
 
@@ -36,7 +36,7 @@ const AddUser = ({ show, onClose }) => {
       name: values.name,
       attributes: fields
     };
-    await dispatch(crateCategory({value:categoryObj}));
+    await dispatch(crateCategory({ value: categoryObj }));
     setTimeout(() => {
       setIsDisabled(false);
       onClose();
@@ -97,13 +97,14 @@ const AddUser = ({ show, onClose }) => {
           </div>
         ))}
         <br />
-        <Button type="dashed" onClick={handleAddField} style={{ width: "fit-content", float:"right", border: "2px solid black" }}>+ Add
+        <Button type="dashed" onClick={handleAddField}
+                style={{ width: "fit-content", float: "right", border: "2px solid black" }}>+ Add
           Field
         </Button>
         <br />
         <br />
         <Form.Item wrapperCol={{ offset: 10, span: 14 }}>
-          <Button  type="primary" htmlType="submit" disabled={isDisabled}>
+          <Button type="primary" htmlType="submit" disabled={isDisabled}>
             Submit
           </Button>
         </Form.Item>

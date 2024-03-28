@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Upload, Select } from "antd";
+import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { invalidEmail, isRequired } from "../../constant/constants";
 import { adminUpdateUser, getLoggedUser } from "../../redux-store/userSlice";
@@ -11,7 +11,7 @@ const { Option } = Select;
 const EditUser = ({ show, onClose }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const dispatch = useDispatch();
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState("");
   const [images, setImages] = useState([]);
   const { user } = useSelector((state) => state.users);
 
@@ -72,8 +72,8 @@ const EditUser = ({ show, onClose }) => {
           uid: "-1",
           name: "image.png",
           status: "done",
-          url: img,
-        },
+          url: img
+        }
       ]);
     }
   }, []);
@@ -94,29 +94,33 @@ const EditUser = ({ show, onClose }) => {
           wrapperCol={{ span: 14 }}
           layout="horizontal"
           onFinish={handleFormSubmit}
-          style={{ maxWidth: 600,overflowY: 'auto', height:400 }}
+          style={{ maxWidth: 600, overflowY: "auto", height: 400 }}
           onClick={(event) => event.stopPropagation()}
           initialValues={{
             firstname: user?.firstname,
             lastname: user?.lastname,
             email: user?.email,
             username: user?.username,
-            city: user?.city,
+            city: user?.city
           }}
         >
-          <Form.Item label="Firstname" name="firstname" rules={[{ required: true, message: 'Firstname' + isRequired, }]}>
+          <Form.Item label="Firstname" name="firstname"
+                     rules={[{ required: true, message: "Firstname" + isRequired }]}>
             <Input />
           </Form.Item>
-          <Form.Item label="Lastname" name="lastname" rules={[{ required: true, message: 'Lastname' + isRequired, }]}>
+          <Form.Item label="Lastname" name="lastname" rules={[{ required: true, message: "Lastname" + isRequired }]}>
             <Input />
           </Form.Item>
           <Form.Item label="Username" name="username">
             <Input />
           </Form.Item>
-          <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Email' + isRequired, },{ type: "email", message: invalidEmail }]}>
+          <Form.Item label="Email" name="email" rules={[{ required: true, message: "Email" + isRequired }, {
+            type: "email",
+            message: invalidEmail
+          }]}>
             <Input />
           </Form.Item>
-          <Form.Item label="City" name="city" rules={[{ required: true, message: 'City' + isRequired, }]}>
+          <Form.Item label="City" name="city" rules={[{ required: true, message: "City" + isRequired }]}>
             <Input />
           </Form.Item>
           <Form.Item label="Role" name="role">

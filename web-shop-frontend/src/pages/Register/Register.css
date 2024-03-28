@@ -7,6 +7,7 @@
     text-align: center;
     color: #000;
 }
+
 .signup-link {
     color: #6B7280;
     font-size: .875rem;
@@ -14,6 +15,7 @@
     text-align: center;
 
 }
+
 .error1 {
     color: #2c54e0;
     font-size: 14px;
@@ -27,7 +29,8 @@
     margin-left: 30%;
     font-weight: bold;
 }
-.signupLink{
+
+.signupLink {
     text-decoration: none;
     color: rebeccapurple;
     font-weight: bold;

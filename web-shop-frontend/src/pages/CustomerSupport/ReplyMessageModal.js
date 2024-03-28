@@ -10,12 +10,12 @@ const ReplyMessageModal = ({ show, onClose, record }) => {
   const [statusCode, setStatusCode] = useState(null);
   const handleFormSubmit = (values) => {
     const { mail, question, answer } = values;
-    const replyRquest = {
+    const replyRequest = {
       mail: mail,
-      question:question,
-      answer:answer
+      question: question,
+      answer: answer
     };
-    dispatch(replyMessage({value:replyRquest}))
+    dispatch(replyMessage({ value: replyRequest }));
     setStatusCode("Message sent successfully.");
     setTimeout(() => {
       setIsDisabled(false);
@@ -27,7 +27,7 @@ const ReplyMessageModal = ({ show, onClose, record }) => {
     <>
       <Modal
         maskClosable={false}
-        title={<div style={{ textAlign: 'center', fontSize: '20px' }}>Reply Message</div>}
+        title={<div style={{ textAlign: "center", fontSize: "20px" }}>Reply Message</div>}
         open={show}
         onCancel={onClose}
         footer={[
@@ -36,7 +36,7 @@ const ReplyMessageModal = ({ show, onClose, record }) => {
           </Button>,
           <Button key="reply" type="primary" disabled={isDisabled} onClick={() => form.submit()}>
             Reply
-          </Button>,
+          </Button>
         ]}
       >
         <Form
@@ -46,8 +46,8 @@ const ReplyMessageModal = ({ show, onClose, record }) => {
           layout="horizontal"
           onFinish={handleFormSubmit}
           initialValues={{
-            'mail': record.user.email,
-            'question': record.question,
+            "mail": record.user.email,
+            "question": record.question
           }}
         >
           <Form.Item label="User-email" name="mail">
@@ -58,12 +58,12 @@ const ReplyMessageModal = ({ show, onClose, record }) => {
             <Input.TextArea disabled autoSize={{ minRows: 3, maxRows: 5 }} />
           </Form.Item>
 
-          <Form.Item label="Answer" name="answer" rules={[{ required: true, message: 'Please enter your reply!' }]}>
+          <Form.Item label="Answer" name="answer" rules={[{ required: true, message: "Please enter your reply!" }]}>
             <Input.TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
           </Form.Item>
           {
             statusCode &&
-            <p className='replyMessageStyle' style={{maxWidth: "250px"}}>
+            <p className="replyMessageStyle" style={{ maxWidth: "250px" }}>
               {statusCode}
             </p>
 

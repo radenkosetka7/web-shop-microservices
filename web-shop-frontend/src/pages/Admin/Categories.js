@@ -7,13 +7,14 @@ import { deleteCategory, getCategories, getCategoryAttributes } from "../../redu
 import EditCategory from "./EditCategory";
 import AddCategory from "./AddCategory";
 import ViewAttributes from "./ViewAttributes";
+
 const { Footer } = Layout;
 
 const Categories = () => {
 
   const [size, setSize] = useState(10);
   const [current, setCurrent] = useState(1);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
   const [editModal, setEditModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
@@ -22,8 +23,8 @@ const Categories = () => {
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    dispatch(getCategories({}))
-  }, [refreshKey])
+    dispatch(getCategories({}));
+  }, [refreshKey]);
 
   const handleCloseEditModal = () => {
     setEditModal(false);
@@ -36,19 +37,19 @@ const Categories = () => {
   };
 
   const handleDeleteClick = async (record) => {
-    await dispatch(deleteCategory({ value: record.id }))
+    await dispatch(deleteCategory({ value: record.id }));
     setRefreshKey((prevKey) => prevKey + 1);
     setSelectedRecord(null);
   };
 
   const handleEditClick = async (record) => {
-    await dispatch(getCategoryAttributes({ value: record.id }))
+    await dispatch(getCategoryAttributes({ value: record.id }));
     setEditModal(true);
     setSelectedRecord(record);
   };
 
   const handleAttributesClick = async (record) => {
-    await dispatch(getCategoryAttributes({ value: record.id }))
+    await dispatch(getCategoryAttributes({ value: record.id }));
     setAttributesModal(true);
     setSelectedRecord(record);
   };
@@ -58,14 +59,14 @@ const Categories = () => {
   };
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name"
     },
 
     {
-      title: 'Attributes',
-      key: 'attribute',
+      title: "Attributes",
+      key: "attribute",
       render: (_, record) => (
         <Space size="middle">
           <Tooltip placement={"top"} title={"View"}>
@@ -74,11 +75,11 @@ const Categories = () => {
             </Button>
           </Tooltip>
         </Space>
-      ),
+      )
     },
     {
-      title: 'Actions',
-      key: 'action',
+      title: "Actions",
+      key: "action",
       render: (_, record) => (
         <Space size="middle">
           <Tooltip placement={"top"} title={"Edit"}>
@@ -87,14 +88,14 @@ const Categories = () => {
             </Button>
           </Tooltip>
           <Tooltip placement={"top"} title={"Delete"}>
-            <Button style={{ backgroundColor: 'red' }} onClick={() => handleDeleteClick(record)}>
+            <Button style={{ backgroundColor: "red" }} onClick={() => handleDeleteClick(record)}>
               <DeleteOutlined />
             </Button>
           </Tooltip>
         </Space>
-      ),
-    },
-  ]
+      )
+    }
+  ];
 
   const handleChange = (newPage) => {
     setCurrent(newPage.current);
@@ -104,27 +105,29 @@ const Categories = () => {
   return (
     <div>
       <Tooltip placement={"top"} title={"Add"}>
-        <Button type="primary" onClick={() => setAddModal(true)} shape="circle" icon={<PlusOutlined />} style={{ float: 'right', width:'30px', marginRight: '20px', marginTop: '20px' }} />
+        <Button type="primary" onClick={() => setAddModal(true)} shape="circle" icon={<PlusOutlined />}
+                style={{ float: "right", width: "30px", marginRight: "20px", marginTop: "20px" }} />
       </Tooltip>
       <h1>Categories</h1>
       <hr />
       <div style={{ minHeight: "69.2vh" }}>
-        <Table columns={columns}  onChange={handleChange} dataSource={categories} pagination={{
+        <Table columns={columns} onChange={handleChange} dataSource={categories} pagination={{
           current: current,
           size: size,
           total: categories.total,
           showSizeChanger: true,
-          pageSizeOptions: ['10', '20', '50'],
+          pageSizeOptions: ["10", "20", "50"]
         }}>
         </Table>
       </div>
       <Footer style={{ backgroundColor: "#1d8f8a" }}>
       </Footer>
-      {editModal && <EditCategory show={editModal} onClose={handleCloseEditModal} category={selectedRecord}/>}
-      {addModal && <AddCategory show={addModal} onClose={handleCloseAddModal}/>}
-      {attributesModal && <ViewAttributes show={attributesModal} onClose={handleCloseAttributesModal} record={selectedRecord}/>}
+      {editModal && <EditCategory show={editModal} onClose={handleCloseEditModal} category={selectedRecord} />}
+      {addModal && <AddCategory show={addModal} onClose={handleCloseAddModal} />}
+      {attributesModal &&
+        <ViewAttributes show={attributesModal} onClose={handleCloseAttributesModal} record={selectedRecord} />}
     </div>
-  )
-}
+  );
+};
 
 export default Categories;

@@ -7,6 +7,7 @@ import { FaCircle } from "react-icons/fa";
 import { EditTwoTone, PlusOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import EditUser from "./EditUser";
 import AddUser from "./AddUser";
+
 const { Footer } = Layout;
 
 const Users = () => {
@@ -14,7 +15,7 @@ const Users = () => {
   const [name, setName] = useState("");
   const [size, setSize] = useState(10);
   const [current, setCurrent] = useState(1);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [editModal, setEditModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
 
@@ -22,12 +23,11 @@ const Users = () => {
   const [refreshKey, setRefreshKey] = useState(0);
 
 
-
   const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
-    dispatch(getAllUsers({ page: current, size: size }))
-  }, [refreshKey])
+    dispatch(getAllUsers({ page: current, size: size }));
+  }, [refreshKey]);
 
 
   const handleCloseReplyModal = () => {
@@ -37,17 +37,16 @@ const Users = () => {
 
   const handleCloseAddModal = () => {
     setAddModal(false);
-    //setRefreshKey((prevKey) => prevKey + 1);
   };
 
 
   const handleEditClick = async (record) => {
-    await dispatch(getUser({ id: record.id }))
+    await dispatch(getUser({ id: record.id }));
     setEditModal(true);
     setSelectedRecord(record);
   };
   const handleDeleteClick = (record) => {
-    dispatch(blockUser({id:record.id}))
+    dispatch(blockUser({ id: record.id }));
     setRefreshKey((prevKey) => prevKey + 1);
     setSelectedRecord(null);
   };
@@ -57,7 +56,7 @@ const Users = () => {
     setName(value);
     setCurrent(1);
     const newPage = { current: 1, pageSize: size, name: value };
-    dispatch(getAllUsers({ page: newPage.current, size: newPage.pageSize, name: newPage.name }))
+    dispatch(getAllUsers({ page: newPage.current, size: newPage.pageSize, name: newPage.name }));
   };
 
   function ReadStatus(check) {
@@ -65,8 +64,7 @@ const Users = () => {
       return <Tooltip placement={"top"} title={"Active"}>
         <FaCircle color="green" size="1em" />
       </Tooltip>;
-    }
-    else if (check === "REQUESTED") {
+    } else if (check === "REQUESTED") {
       return <Tooltip placement={"top"} title={"Requested"}>
         <FaCircle color="blue" size="1em" />
       </Tooltip>;
@@ -77,60 +75,62 @@ const Users = () => {
   }
 
   function ShowAvatar(avatar) {
-    return <img width={50} src={avatar != null ? require(`/usr/src/app/src/assets/users/${avatar}.png`) : require('/usr/src/app/src/assets/user_318-159711.avif')} alt={require('/usr/src/app/src/assets/user_318-159711.avif')} />
+    return <img width={50}
+                src={avatar != null ? require(`/usr/src/app/src/assets/users/${avatar}.png`) : require("/usr/src/app/src/assets/user_318-159711.avif")}
+                alt={require("/usr/src/app/src/assets/user_318-159711.avif")} />;
 
   }
 
   const columns = [
     {
-      title: 'First name',
-      dataIndex: 'firstname',
-      key: 'firstname',
+      title: "First name",
+      dataIndex: "firstname",
+      key: "firstname"
     },
     {
-      title: 'Last name',
-      dataIndex: 'lastname',
-      key: 'lastname',
+      title: "Last name",
+      dataIndex: "lastname",
+      key: "lastname"
     },
     {
-      title: 'Username',
-      dataIndex: 'username',
-      key: 'username',
+      title: "Username",
+      dataIndex: "username",
+      key: "username"
     },
     {
-      title: 'E-mail',
-      dataIndex: 'email',
-      key: 'email',
+      title: "E-mail",
+      dataIndex: "email",
+      key: "email"
     },
     {
-      title: 'City',
-      dataIndex: 'city',
-      key: 'city',
+      title: "City",
+      dataIndex: "city",
+      key: "city"
     },
     {
-      title: 'Avatar',
-      dataIndex: 'avatar',
-      key: 'avatar',
+      title: "Avatar",
+      dataIndex: "avatar",
+      key: "avatar",
       render: (cell) => {
-        return ShowAvatar(cell)
+        return ShowAvatar(cell);
       }
     },
     {
-      title: 'Role',
-      dataIndex: 'role',
-      key: 'role',
+      title: "Role",
+      dataIndex: "role",
+      key: "role"
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
       render: (cell) => {
-        return ReadStatus(cell)
+        return ReadStatus(cell);
       }
     },
     {
-      title: 'Actions',
-      key: 'action',
+      title: "Actions",
+      key: "action",
       render: (_, record) => (
         <Space size="middle">
           <Tooltip placement={"top"} title={"Edit"}>
@@ -139,26 +139,27 @@ const Users = () => {
             </Button>
           </Tooltip>
           <Tooltip placement={"top"} title={"Block"}>
-            <Button style={{ backgroundColor: 'red' }} onClick={() => handleDeleteClick(record)}>
+            <Button style={{ backgroundColor: "red" }} onClick={() => handleDeleteClick(record)}>
               <UserDeleteOutlined />
             </Button>
           </Tooltip>
         </Space>
-      ),
-    },
-  ]
+      )
+    }
+  ];
 
   const handleChange = (newPage) => {
     setCurrent(newPage.current);
     setSize(newPage.pageSize);
-    dispatch(getAllUsers({ page: newPage.current, size: newPage.pageSize, name: name }))
+    dispatch(getAllUsers({ page: newPage.current, size: newPage.pageSize, name: name }));
   };
 
   return (
     <div>
       <SearchComponent onSearch={onSearch} />
       <Tooltip placement={"top"} title={"Add"}>
-      <Button type="primary" shape="circle" onClick={() => setAddModal(true)} icon={<PlusOutlined />} style={{ float: 'right', width:'30px', marginRight: '20px', marginTop: '20px' }} />
+        <Button type="primary" shape="circle" onClick={() => setAddModal(true)} icon={<PlusOutlined />}
+                style={{ float: "right", width: "30px", marginRight: "20px", marginTop: "20px" }} />
       </Tooltip>
       <h1>Users</h1>
       <hr />
@@ -168,17 +169,17 @@ const Users = () => {
           size: size,
           total: users.total,
           showSizeChanger: true,
-          pageSizeOptions: ['10', '20', '50'],
+          pageSizeOptions: ["10", "20", "50"]
         }}>
         </Table>
       </div>
       <Footer style={{ backgroundColor: "#1d8f8a" }}>
       </Footer>
-      {editModal && <EditUser show={editModal} onClose={handleCloseReplyModal}/>}
-      {addModal && <AddUser show={addModal} onClose={handleCloseAddModal}/>}
+      {editModal && <EditUser show={editModal} onClose={handleCloseReplyModal} />}
+      {addModal && <AddUser show={addModal} onClose={handleCloseAddModal} />}
 
     </div>
-  )
-}
+  );
+};
 
 export default Users;

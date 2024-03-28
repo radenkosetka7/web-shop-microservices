@@ -1,19 +1,16 @@
-import './Register.css';
-import {registration, uploadImage} from '../../services/auth.service';
-import {
-  signUpTitle, isRequired, errorLength, invalidEmail, errorCPass
-} from '../../constant/constants';
-import React, {useState} from 'react';
+import "./Register.css";
+import { registration, uploadImage } from "../../services/auth.service";
+import { errorCPass, errorLength, invalidEmail, isRequired, signUpTitle } from "../../constant/constants";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Input, Upload } from "antd";
-import {useEffect} from "react";
-import {Link, useNavigate} from 'react-router-dom';
-import {useDispatch, useSelector} from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { PlusOutlined } from "@ant-design/icons";
 
 const Register = () => {
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [contentHeight, setContentHeight] = useState('calc(100vh - 75px)');
+  const [contentHeight, setContentHeight] = useState("calc(100vh - 75px)");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,21 +18,21 @@ const Register = () => {
   const [avatar, setAvatar] = useState("");
 
 
-  const {authenticated} = useSelector((state) => state.users);
+  const { authenticated } = useSelector((state) => state.users);
 
   useEffect(() => {
     if (authenticated)
-      navigate('/');
+      navigate("/");
   }, [authenticated, navigate, dispatch]);
 
-  const handleChangeImage = ({fileList: newFileList}) => {
+  const handleChangeImage = ({ fileList: newFileList }) => {
     setImages(newFileList);
     setAvatar(newFileList[0]);
   };
 
   const [statusCode, setStatusCode] = useState(null);
 
-  const [selectedFile, setSelectedFile] = useState('');
+  const [selectedFile, setSelectedFile] = useState("");
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -43,11 +40,10 @@ const Register = () => {
     setIsDisabled(true);
     let formData;
     let uid;
-    if(avatar)
-    {
-      formData  = new FormData();
-      formData.append("file",avatar.originFileObj)
-      uid = avatar.uid
+    if (avatar) {
+      formData = new FormData();
+      formData.append("file", avatar.originFileObj);
+      uid = avatar.uid;
     }
     try {
       const registerReq = {
@@ -58,45 +54,44 @@ const Register = () => {
         password: registerData.password,
         email: registerData.mail,
         avatar: avatar ? uid : null
-      }
+      };
       await registration(registerReq);
-      if(avatar)
-      {
-        uploadImage(formData,uid);
+      if (avatar) {
+        uploadImage(formData, uid);
       }
-        setStatusCode("Successfully registered.");
-        setTimeout(() => {
-          navigate("/activateAccount", {state: {username: registerReq.username}});
-          setIsDisabled(false);
-        }, 2000);
+      setStatusCode("Successfully registered.");
+      setTimeout(() => {
+        navigate("/activateAccount", { state: { username: registerReq.username } });
+        setIsDisabled(false);
+      }, 2000);
     } catch (error) {
       setStatusCode(error.response.data.message);
       setIsDisabled(false);
     }
 
-  }
+  };
   return (
     <div>
-      <div style={{backgroundColor: '#f3f1f1', height: contentHeight}}>
-        <div className='linearGradient1'>
+      <div style={{ backgroundColor: "#f3f1f1", height: contentHeight }}>
+        <div className="linearGradient1">
           <Form
             name="basic"
             labelCol={{
-              span: 9,
+              span: 9
             }}
             wrapperCol={{
-              span: 12,
+              span: 12
             }}
             style={{
-              maxWidth: 600,
+              maxWidth: 600
             }}
             initialValues={{
-              remember: true,
+              remember: true
             }}
             onFinish={onSubmit}
             autoComplete="off"
           >
-            <p className='form-title1'>{signUpTitle}</p>
+            <p className="form-title1">{signUpTitle}</p>
             <Form.Item
               label="Firstname"
               name="name"
@@ -104,11 +99,11 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Firstname' + isRequired,
-                },
+                  message: "Firstname" + isRequired
+                }
               ]}
             >
-              <Input/>
+              <Input />
             </Form.Item>
             <Form.Item
               label="Lastname"
@@ -117,11 +112,11 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Lastname' + isRequired,
-                },
+                  message: "Lastname" + isRequired
+                }
               ]}
             >
-              <Input/>
+              <Input />
             </Form.Item>
             <Form.Item
               label="Username"
@@ -130,12 +125,12 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Username' + isRequired,
+                  message: "Username" + isRequired
 
-                },
+                }
               ]}
             >
-              <Input/>
+              <Input />
             </Form.Item>
 
             <Form.Item
@@ -145,16 +140,16 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Password' + isRequired,
+                  message: "Password" + isRequired
 
                 },
                 {
                   min: 8,
-                  message: errorLength,
+                  message: errorLength
                 }
               ]}
             >
-              <Input.Password/>
+              <Input.Password />
             </Form.Item>
             <Form.Item
               label="Confirm password: "
@@ -163,19 +158,19 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Password' + isRequired,
+                  message: "Password" + isRequired
                 },
-                ({getFieldValue}) => ({
+                ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
+                    if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(new Error(errorCPass));
-                  },
-                }),
+                  }
+                })
               ]}
             >
-              <Input.Password/>
+              <Input.Password />
             </Form.Item>
             <Form.Item
               label="Email"
@@ -183,7 +178,7 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Email' + isRequired,
+                  message: "Email" + isRequired
                 },
                 {
                   type: "email",
@@ -191,7 +186,7 @@ const Register = () => {
                 }
               ]}
             >
-              <Input/>
+              <Input />
             </Form.Item>
             <Form.Item
               label="City"
@@ -200,11 +195,11 @@ const Register = () => {
               rules={[
                 {
                   required: true,
-                  message: 'City' + isRequired,
-                },
+                  message: "City" + isRequired
+                }
               ]}
             >
-              <Input/>
+              <Input />
             </Form.Item>
             <Form.Item
               label="Avatar"
@@ -237,16 +232,16 @@ const Register = () => {
             <Form.Item
               wrapperCol={{
                 offset: 10,
-                span: 16,
+                span: 16
               }}
             >
               <Button type="primary" htmlType="submit" disabled={isDisabled}>
-                {!isDisabled ? 'Submit' : 'Loading...'}
+                {!isDisabled ? "Submit" : "Loading..."}
               </Button>
             </Form.Item>
-            <p className='signup-link'>
+            <p className="signup-link">
               Already have an account?
-              <Link to="/login" className='signupLink'> Login</Link>
+              <Link to="/login" className="signupLink"> Login</Link>
             </p>
           </Form>
 
@@ -254,6 +249,6 @@ const Register = () => {
       </div>
     </div>
 
-  )
-}
+  );
+};
 export default Register;

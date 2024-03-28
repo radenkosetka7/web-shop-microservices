@@ -1,22 +1,22 @@
-import React from 'react';
-import { PlusOutlined } from '@ant-design/icons';
+import React from "react";
+import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Upload } from "antd";
 
 
-const ImagesForm = ({ onFinish, images,setImages }) => {
+const ImagesForm = ({ onFinish, images, setImages }) => {
 
   const handleSubmit = (values) => {
     onFinish({ ...values, images: images });
   };
 
-  const handleChange = ({fileList: newFileList}) => {
+  const handleChange = ({ fileList: newFileList }) => {
     setImages(newFileList);
   };
   return (
     <Form
       onFinish={handleSubmit}
       style={{
-        maxWidth: 600,
+        maxWidth: 600
       }}
       autoComplete="off"
     >

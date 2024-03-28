@@ -1,22 +1,21 @@
-import { Button, Form, Input, Modal } from 'antd';
-import React, { useState } from 'react';
-import { errorCPass, errorLength, isRequired } from '../../constant/constants';
-import { changePassword } from '../../redux-store/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Form, Input, Modal } from "antd";
+import React, { useState } from "react";
+import { errorCPass, errorLength, isRequired } from "../../constant/constants";
+import { changePassword } from "../../redux-store/userSlice";
+import { useDispatch } from "react-redux";
 
 const ChangePassword = ({ show, onClose }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const dispatch = useDispatch();
-  const { loggedUser } = useSelector((state) => state.users);
 
   const handleFormSubmit = (values) => {
     setIsDisabled(true);
     const changePasswordRequest = {
       password: values.password,
-      confirmPassword: values.confirmPassword,
+      confirmPassword: values.confirmPassword
     };
     dispatch(
-      changePassword({ value: changePasswordRequest }),
+      changePassword({ value: changePasswordRequest })
     );
     setTimeout(() => {
       setIsDisabled(false);
@@ -29,7 +28,7 @@ const ChangePassword = ({ show, onClose }) => {
       <Modal
         maskClosable={false}
         title={
-          <div style={{ textAlign: 'center', fontSize: '20px' }}>
+          <div style={{ textAlign: "center", fontSize: "20px" }}>
             Change password
           </div>
         }
@@ -52,12 +51,12 @@ const ChangePassword = ({ show, onClose }) => {
             rules={[
               {
                 required: true,
-                message: 'Password' + isRequired,
+                message: "Password" + isRequired
               },
               {
                 min: 8,
-                message: errorLength,
-              },
+                message: errorLength
+              }
             ]}
           >
             <Input.Password />
@@ -68,16 +67,16 @@ const ChangePassword = ({ show, onClose }) => {
             rules={[
               {
                 required: true,
-                message: 'Password' + isRequired,
+                message: "Password" + isRequired
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
+                  if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
                   return Promise.reject(new Error(errorCPass));
-                },
-              }),
+                }
+              })
             ]}
           >
             <Input.Password />

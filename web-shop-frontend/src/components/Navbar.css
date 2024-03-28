@@ -1,13 +1,14 @@
-.navbarMenu{
+.navbarMenu {
     display: flex;
     background-color: #1d8f8a;
 }
-.confLogo{
+
+.confLogo {
     width: 110px;
     height: 65px;
 }
 
-.logo-map{
+.logo-map {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,7 +18,7 @@
     gap: 20px;
 }
 
-.twoItems{
+.twoItems {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,7 +27,7 @@
 
 .map-text,
 .home,
-.map-text:hover{
+.map-text:hover {
     text-decoration: none;
     text-transform: uppercase;
     font-size: 16px;
@@ -67,8 +68,9 @@
 }
 
 .underline:hover::before {
-    width:100%;
+    width: 100%;
 }
+
 .active {
     color: blue;
 }
