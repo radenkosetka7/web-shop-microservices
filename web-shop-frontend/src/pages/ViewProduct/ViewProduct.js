@@ -46,10 +46,11 @@ const ViewProduct = () => {
     setRefreshKey((prevKey) => prevKey + 1);
   };
   const onFinish = async () => {
-    handleBuyModalClose();
+    setIsDisabled(true)
     dispatch(purchaseProduct({ id: id }));
     await new Promise(resolve => setTimeout(resolve, 1000));
     handleSavePurchase();
+    handleBuyModalClose();
   };
 
   function answerOnComment(comment) {

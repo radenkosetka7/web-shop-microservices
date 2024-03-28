@@ -32,7 +32,7 @@ const CardComponent = ({ product, handleChangeRefreshKey }) => {
       >
         <Meta className="price" title={product.title} description={`${product.price} BAM`} />
         <br />
-        {loggedUser && product && product.userSeller === loggedUser.id &&
+        {loggedUser && product && product.userSeller === loggedUser.id && product.finished === 0 &&
           <Button type="primary" onClick={handleDeleteClick}
                   style={{ backgroundColor: "red", width: "fit-content" }}><DeleteOutlined /> Delete</Button>}
       </Card>

@@ -15,7 +15,7 @@ const PurchaseProduct = ({ show, onClose, onFinish }) => {
   return (
     <Modal maskClosable={false} title={<div style={{ textAlign: "center", fontSize: "20px" }}>Buy product</div>}
            footer={[]} open={show} onCancel={onClose}>
-      <div style={{ maxHeight: "70vh", overflowY: "auto" }}> {/* Dodani div za omotavanje sadržaja */}
+      <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
         <br />
         <Card style={{
           display: "flex",
