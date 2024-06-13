@@ -5,7 +5,16 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(ApiGatewayModule);
+  const fs = require('fs');
+  const filePath = process.env.FILE_PATH;
+  const keyFile = fs.readFileSync(filePath + '/key.pem');
+  const certFile = fs.readFileSync(filePath + '/cert.pem');
+  const app = await NestFactory.create(ApiGatewayModule, {
+    httpsOptions: {
+      key: keyFile,
+      cert: certFile,
+    },
+  });
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
   app.setGlobalPrefix('api');
